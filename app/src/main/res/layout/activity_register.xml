@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@color/background_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sproj.arimagerecognizer.RegisterActivity">
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Hi!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Subtitle Text -->
+    <TextView
+        android:id="@+id/textViewSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="40dp"
+        android:text="Create a new account"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Username EditText -->
+    <EditText
+        android:id="@+id/editTextNewUsername"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:hint="Username"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!--        android:background="@drawable/spinner_background"-->
+    <Spinner
+        android:id="@+id/spinnerLanguage"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/language_options"
+        android:padding="8dp"
+        android:popupBackground="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewUsername"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="26dp" />
+
+
+
+    <!-- Password EditText -->
+    <EditText
+        android:id="@+id/editTextNewPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerLanguage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Confirm Password EditText -->
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/button_register_enter"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="REGISTER"
+        android:backgroundTint="@color/lightpink"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Sign In Text -->
+    <TextView
+        android:id="@+id/textViewSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Log In"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"
+        android:onClick="onSignInClick"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

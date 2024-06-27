@@ -1,0 +1,41 @@
+<!--
+ Copyright 2021 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+  <string name="app_name">AR Learning App</string>
+  <string name="scan_busy">Scanning…</string>
+  <string name="scan_available">Scan</string>
+  <string name="clear">Clear</string>
+  <string name="use_cloud_ml">Use Cloud ML</string>
+  <string name="open_camera">Open Camera</string>
+  <string name="new_password">New Password</string>
+  <string name="confirm_new_password">Confirm New Password</string>
+  <string name="help_text">Welcome to [Your App Name]! Here you can learn how to navigate through the app and make the most of its features. If you have any questions, feel free to contact our support team.</string>
+    <string name="login">Login</string>
+  <string name="username">Username</string>
+  <string name="password">Password</string>
+  <string name="create_account_text">Don\'t have an account? Sign Up</string>
+  <string name="login_text">login</string>
+    <string name="menu">Menu</string>
+  <string name="graphic_for_ar_camera">Graphic for AR camera</string>
+  <string name="open_ar_camera">Open AR Camera</string>
+  <string name="start_learning_new_vocabulary">Start learning new vocabulary</string>
+  <string name="study_graphic">Study graphic</string>
+  <string name="study">Study</string>
+  <string name="test_graphic">Test graphic</string>
+  <string name="test">Test</string>
+
+</resources>

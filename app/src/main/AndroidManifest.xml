@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Design.Light.NoActionBar">
+        <activity
+            android:name="com.sproj.arimagerecognizer.arhelper.ml.ARActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.HelpActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.LoginActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.QuizActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.RegisterActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.StudyActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.UserProfileActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.HomeActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.LearnWithARActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity
+            android:name="com.sproj.arimagerecognizer.MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
+    </application>
+
+</manifest>
