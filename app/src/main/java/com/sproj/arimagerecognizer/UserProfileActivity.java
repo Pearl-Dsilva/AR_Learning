@@ -15,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private TextView usernameTextView;
-    private TextView languageTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +26,8 @@ public class UserProfileActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
-        usernameTextView = findViewById(R.id.textViewUsername);
-        languageTextView = findViewById(R.id.languageTextView);
+        TextView usernameTextView = findViewById(R.id.textViewUsername);
+        TextView languageTextView = findViewById(R.id.languageTextView);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "N/A");
