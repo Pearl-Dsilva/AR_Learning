@@ -16,45 +16,82 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <android.opengl.GLSurfaceView
-      android:id="@+id/surfaceview"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent" />
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="80dp"
-      android:layout_gravity="bottom|center_horizontal"
-      app:layout_dodgeInsetEdges="bottom">
+    <android.opengl.GLSurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="fill_parent"
+        android:layout_height="758dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/scanButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="60dp"
-        android:text="@string/scan_available" />
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="80dp"
+        app:layout_dodgeInsetEdges="bottom">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/clearButton"
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/scanButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingHorizontal="60dp"
+          android:text="@string/scan_available" />
+
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/clearButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingHorizontal="60dp"
+          android:text="@string/clear" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/useCloudMlSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="60dp"
-        android:text="@string/clear" />
+        android:layout_gravity="top|end"
+        android:background="#55FFFFFF"
+        android:padding="16dp"
+        android:text="@string/use_cloud_ml" />
 
-  </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loading_indicator1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#805D615B"
+        android:visibility="gone">
 
-  <androidx.appcompat.widget.SwitchCompat
-      android:id="@+id/useCloudMlSwitch"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="top|end"
-      android:padding="16dp"
-      android:background="#55FFFFFF"
-      android:text="@string/use_cloud_ml" />
+      <ProgressBar
+          android:id="@+id/progressBar1"
+          style="?android:attr/progressBarStyle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:indeterminateTint="#FFFFFF"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+          android:id="@+id/textView31"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Loading... Please Wait"
+          android:textColor="#FFFFFF"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/progressBar1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+

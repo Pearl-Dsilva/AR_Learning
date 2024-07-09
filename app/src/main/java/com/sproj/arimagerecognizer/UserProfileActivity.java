@@ -1,33 +1,38 @@
 package com.sproj.arimagerecognizer;
 
-import android.os.Bundle;
-
-import android.content.Intent;
-import android.view.View;
 import android.app.AlertDialog;
-import android.widget.EditText;
-import android.widget.Toast;
-import android.widget.TextView;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.widget.Spinner;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class UserProfileActivity extends AppCompatActivity {
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_profile);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+
+        mAuth = FirebaseAuth.getInstance();
 
         TextView usernameTextView = findViewById(R.id.textViewUsername);
         TextView languageTextView = findViewById(R.id.languageTextView);
+
+        Button logoutButton = findViewById(R.id.buttonLogout);
+
+        // TODO: Implement loading languages from a on device database
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "N/A");
@@ -51,9 +56,10 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
 
+        logoutButton.setOnClickListener(listener -> logoutUser());
+
         // Setup change password button, this should navigate to a different screen where the user can change their password
         findViewById(R.id.buttonChangePassword).setOnClickListener(view -> showChangePasswordDialog());
-
     }
 
     private void logoutUser() {
@@ -61,6 +67,7 @@ public class UserProfileActivity extends AppCompatActivity {
         // This could involve clearing saved user credentials and navigating back to the login screen
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mAuth.signOut();
         startActivity(intent);
         finish();
     }
@@ -96,4 +103,4 @@ public class UserProfileActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    }
+}

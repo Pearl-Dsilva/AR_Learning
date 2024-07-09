@@ -20,6 +20,7 @@ import android.opengl.GLSurfaceView
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.sproj.arimagerecognizer.R
@@ -29,6 +30,9 @@ import com.sproj.arimagerecognizer.arhelper.common.samplerender.SampleRender
 /**
  * Wraps [R.layout.activity_main] and controls lifecycle operations for [GLSurfaceView].
  */
+////added 08/07/24
+//private lateinit var loading: ConstraintLayout
+
 class MainActivityView(val activity: ARActivity, renderer: AppRenderer) : DefaultLifecycleObserver {
   val root = View.inflate(activity, R.layout.activity_main, null)
   val surfaceView = root.findViewById<GLSurfaceView>(R.id.surfaceview).apply {
@@ -40,6 +44,10 @@ class MainActivityView(val activity: ARActivity, renderer: AppRenderer) : Defaul
   val snackbarHelper = SnackbarHelper().apply {
     setParentView(root.findViewById(R.id.coordinatorLayout))
     setMaxLines(6)
+
+    //added 08/07/24 ... how to know that the libraries are loaded?
+//    loading = root.findViewById(R.id.loading_indicator1)
+//    if (loading.visibility == View.GONE) loading.visibility = View.VISIBLE
   }
 
   override fun onResume(owner: LifecycleOwner) {

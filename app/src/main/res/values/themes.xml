@@ -31,5 +31,7 @@
         </item>
         <item name="colorOnSurface">@color/black</item>
         <!-- Customize your theme here. -->
+
+        <item name="progressBarStyle">@color/black</item>
     </style>
 </resources>

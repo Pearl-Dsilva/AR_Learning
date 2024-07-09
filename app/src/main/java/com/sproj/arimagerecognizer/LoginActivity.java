@@ -2,6 +2,7 @@ package com.sproj.arimagerecognizer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sproj.arimagerecognizer.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sproj.arimagerecognizer.authentication.AuthenticationResult;
 import com.sproj.arimagerecognizer.authentication.Validation;
@@ -31,10 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         final TextView navigateToSignupPage = findViewById(R.id.textViewSignUp);
         final Button loginButton = findViewById(R.id.button_enter);
 
-        navigateToSignupPage.setOnClickListener(listener -> {
-            startActivity(new Intent(this, RegisterActivity.class));
-            finish();
-        });
+        navigateToSignupPage.setOnClickListener(this::onRegisterClick);
 
         loginButton.setOnClickListener(view -> {
             String username = usernameInput.getText().toString().trim();
@@ -49,12 +46,17 @@ public class LoginActivity extends AppCompatActivity {
         if (!(validateEmail(email) && validatePassword(password)))
             return;
 
+        // TODO: Show Loading Indicator
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(success -> {
                     startActivity(new Intent(this, HomeActivity.class));
                     finish();
                 })
-                .addOnFailureListener(failure -> Toast.makeText(LoginActivity.this, "Login Failed: " + failure.getMessage(), Toast.LENGTH_LONG).show());
+                .addOnFailureListener(failure -> Toast.makeText(LoginActivity.this, "Login Failed: " + failure.getMessage(), Toast.LENGTH_LONG).show())
+                .addOnCompleteListener(complete->{
+                   // TODO: Hide Loading Indicator
+                });
     }
 
     public boolean validateEmail(String email) {
@@ -69,6 +71,13 @@ public class LoginActivity extends AppCompatActivity {
         if (!result.result)
             Toast.makeText(this, result.message, Toast.LENGTH_LONG).show();
         return result.result;
+    }
+
+    public void onRegisterClick(View view) {
+        // Intent to open the login activity
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish(); // Optional: if you want to close the registration screen after going to the login
     }
 
 }
