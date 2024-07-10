@@ -18,7 +18,7 @@ public class Validation {
             return new AuthenticationResult("Password must contain upper case alphabets", false);
         } else if (!password.matches(".*[0-9].*")) {
             return new AuthenticationResult("Password must contain at least 1 number", false);
-        } else if (!password.matches(".*[?=.*].*")) { // check this regex
+        } else if (!password.matches(".*[?=.*@].*")) { // check this regex
             return new AuthenticationResult("Password must contain at least 1 special character", false);
         } else
             return new AuthenticationResult("", true);
