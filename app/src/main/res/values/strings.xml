@@ -18,6 +18,8 @@
   <string name="app_name">AR Learning App</string>
   <string name="scan_busy">Scanning…</string>
   <string name="scan_available">Scan</string>
+  <string name="info">Please login with your information</string>
+  <string name="welcome">Welcome</string>
   <string name="clear">Clear</string>
   <string name="use_cloud_ml">Use Cloud ML</string>
   <string name="open_camera">Open Camera</string>
@@ -27,6 +29,7 @@
   <string name="help_text">Welcome to [Your App Name]! Here you can learn how to navigate through the app and make the most of its features. If you have any questions, feel free to contact our support team.</string>
     <string name="login">Login</string>
   <string name="username">Username</string>
+  <string name="email">Email</string>
   <string name="password">Password</string>
   <string name="logout">Logout</string>
   <string name="Language">Language</string>
