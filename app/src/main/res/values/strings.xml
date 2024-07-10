@@ -23,10 +23,13 @@
   <string name="open_camera">Open Camera</string>
   <string name="new_password">New Password</string>
   <string name="confirm_new_password">Confirm New Password</string>
+  <string name="Changepassword">Change Password</string>
   <string name="help_text">Welcome to [Your App Name]! Here you can learn how to navigate through the app and make the most of its features. If you have any questions, feel free to contact our support team.</string>
     <string name="login">Login</string>
   <string name="username">Username</string>
   <string name="password">Password</string>
+  <string name="logout">Logout</string>
+  <string name="Language">Language</string>
   <string name="create_account_text">Don\'t have an account? Sign Up</string>
   <string name="login_text">login</string>
     <string name="menu">Menu</string>
@@ -37,5 +40,6 @@
   <string name="study">Study</string>
   <string name="test_graphic">Test graphic</string>
   <string name="test">Test</string>
+
 
 </resources>
