@@ -13,24 +13,28 @@ public class ValidationTest extends TestCase {
         emails = new TestObject[]{
                 new TestObject("user.gmail", false),
                 new TestObject("user1@gmail.com", true),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
+                new TestObject("USER@gmail", false),
+                new TestObject("user.com", false),
+                new TestObject("gmail.user", false),
+                new TestObject("@user+gmail", false),
+                new TestObject("user123", false),
+                new TestObject("user.name@domain.co", true),
+                new TestObject("username@com", false),
+                new TestObject("1234567890@domain.com", true),
+                new TestObject("username@domain@domain.com", false),
         };
     }
 
     public void setPasswords() {
         // TODO: Implement as many cases as possible
         passwords = new TestObject[]{
-                new TestObject("user.gmail", false),
-                new TestObject("user1@gmail.com", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
+                new TestObject("A3@dfG7!", true),
+                new TestObject("ComplexP@ssw0rd12", true),
+                new TestObject("abc", false),
+//                new TestObject("user.gmail", false),
+//                new TestObject("user.gmail", false),
+//                new TestObject("user.gmail", false),
+//                new TestObject("user.gmail", false),
         };
     }
 
