@@ -18,6 +18,7 @@ import com.sproj.arimagerecognizer.authentication.Validation;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private View LoadingIndicatorLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordInput = findViewById(R.id.editTextPassword);
         final TextView navigateToSignupPage = findViewById(R.id.textViewSignUp);
         final Button loginButton = findViewById(R.id.button_enter);
+        LoadingIndicatorLog = findViewById(R.id.loadingIndicatorLog);
 
         navigateToSignupPage.setOnClickListener(this::onRegisterClick);
 
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!(validateEmail(email) && validatePassword(password)))
             return;
 
-        // TODO: Show Loading Indicator
+        LoadingIndicatorLog.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(success -> {
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(failure -> Toast.makeText(LoginActivity.this, "Login Failed: " + failure.getMessage(), Toast.LENGTH_LONG).show())
                 .addOnCompleteListener(complete->{
-                   // TODO: Hide Loading Indicator
+                    LoadingIndicatorLog.setVisibility(View.GONE);
                 });
     }
 

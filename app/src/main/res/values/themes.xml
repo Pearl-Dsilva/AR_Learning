@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.ARCoreMLKit" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -34,4 +34,22 @@
 
         <item name="progressBarStyle">@color/black</item>
     </style>
+
+
+    <style name="Theme.App.splashscreenTheme" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background, animated icon, and animation
+           duration. -->
+        <item name="windowSplashScreenBackground">@color/white</item>
+
+        <!-- Use windowSplashScreenAnimatedIcon to add a drawable or an animated
+             drawable. One of these is required. -->
+        <!-- Required for animated icons. -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash
+        screen. This is required. -->
+        <item name="postSplashScreenTheme">@style/Theme.ARCoreMLKit</item>
+
+    </style>
+
 </resources>

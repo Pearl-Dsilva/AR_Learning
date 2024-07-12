@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.ar" />
     <uses-feature
         android:name="android.hardware.camera"
@@ -80,7 +81,8 @@
         <activity
             android:name="com.sproj.arimagerecognizer.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.App.splashscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
