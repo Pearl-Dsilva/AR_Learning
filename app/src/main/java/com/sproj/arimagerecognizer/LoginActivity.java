@@ -2,6 +2,7 @@ package com.sproj.arimagerecognizer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.sproj.arimagerecognizer.authentication.AuthenticationResult;
 import com.sproj.arimagerecognizer.authentication.Validation;
 
@@ -19,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private View LoadingIndicatorLog;
-
+    private static final String TAG = "LoginActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
             loginUser(username, password);
         });
 
+        new ModelDownloader().downloader(TranslateLanguage.FRENCH, () -> {
+            Toast.makeText(this, "Downloaded", Toast.LENGTH_SHORT).show();
+        }, () -> {
+            Toast.makeText(this, "Not Downloaded", Toast.LENGTH_SHORT).show();
+        });
+
     }
 
     public void loginUser(String email, String password) {
@@ -56,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 })
                 .addOnFailureListener(failure -> Toast.makeText(LoginActivity.this, "Login Failed: " + failure.getMessage(), Toast.LENGTH_LONG).show())
-                .addOnCompleteListener(complete->{
+                .addOnCompleteListener(complete -> {
                     LoadingIndicatorLog.setVisibility(View.GONE);
                 });
     }
