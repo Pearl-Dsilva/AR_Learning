@@ -26,6 +26,16 @@ public class LanguageManager {
         editor.apply();
     }
 
+    public void languageSelected(int language) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("language", language);
+        editor.apply();
+    }
+
+    public int getLanguage() {
+        return sharedPreferences.getInt("language", 0);
+    }
+
     public void modelDeleted(String modelName) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(modelName);

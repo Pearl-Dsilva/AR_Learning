@@ -19,6 +19,7 @@ import com.sproj.arimagerecognizer.R;
 
 public class HomeActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         ImageView imageViewHelp = findViewById(R.id.imageViewHelp);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-//        SharedPreferences sharedPreferences;
+
 
         // Set up the click listeners for each button
         openARCamera.setOnClickListener(view -> {
@@ -79,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
 
     void selectStartingLanguage(){
         //Load LanguageManager
-//        LanguageManager languageManager = new LanguageManager();
+//        LanguageManager languageManager = new LanguageManager(sharedPreferences);
         //check if user first time, call isSetupCompleted, continue if false
         //show dialog to select language (first time)
         //save lang preference, call SetupCompleted

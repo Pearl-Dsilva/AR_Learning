@@ -23,12 +23,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
+    private LanguageManager languageManager;
+    private static final String TAG = "UserProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +37,14 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         mAuth = FirebaseAuth.getInstance();
+        languageManager = new LanguageManager(getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
 
         TextView usernameTextView = findViewById(R.id.textViewUsername);
         TextView languageTextView = findViewById(R.id.languageTextView);
 
         Button logoutButton = findViewById(R.id.buttonLogout);
 
-        // TODO: Implement loading languages from a on device database
-//        language model download from mlkit
+//        todo: language model download from mlkit
 //        new ModelDownloader().downloader(TranslateLanguage.FRENCH, () -> {
 //            Toast.makeText(this, "Downloaded", Toast.LENGTH_SHORT).show();
 //        }, () -> {
@@ -53,20 +54,33 @@ public class UserProfileActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "N/A");
         String language = sharedPreferences.getString("Language", "Language Not Chosen");
+        ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
 
         usernameTextView.setText(username);
         languageTextView.setText(language);
 
         // If you want to perform actions when a new language is selected:
         Spinner spinnerLanguage = findViewById(R.id.spinnerLanguage);
-        ArrayAdapter<String> languageAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new ArrayList<>(LanguageManager.availableLanguages.keySet()));
+        ArrayAdapter<String> languageAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, availableLanguages);
         languageAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(languageAdaptor);
+        spinnerLanguage.setSelection(languageManager.getLanguage());
 
         spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // You could save the selected language preference here and refresh your activity to apply the language
+                boolean isDownloaded = languageManager.isModelDownloaded(availableLanguages.get(position));
+                if (isDownloaded) {
+                    languageManager.languageSelected(position);
+                } else {
+                    //TODO: show download confirmation (dialog OK, model is not available, should we download? space needed
+                    //todo: if user chooses to download, show blocking dialog with indeterminate progress
+                    //todo: when download successful, show user success dialog, set
+                    // languageManager.modelDownloaded(availableLanguages.get(position));
+                    // languageManager.languageSelected(position);
+                    // todo: when download fails, show user a failure dialog
+                }
             }
 
             @Override
