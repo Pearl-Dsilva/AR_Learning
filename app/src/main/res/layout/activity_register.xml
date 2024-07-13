@@ -59,7 +59,7 @@
         android:id="@+id/editTextNewPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"

@@ -40,8 +40,6 @@ public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private ImageView quizImageView;
 
-    private Button submitButton;
-
     private TranslatorOptions options;
     private Translator englishGermanTranslator;
     private List<Boolean> ignoranceList;
@@ -57,7 +55,7 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.loading_indicator).setVisibility(View.VISIBLE);
         transactionList = new ArrayList<>();
         quizImageView = findViewById(R.id.item_image);
-        submitButton = findViewById(R.id.submit_button);
+        Button submitButton = findViewById(R.id.submit_button);
 
         options = new TranslatorOptions.Builder().setSourceLanguage(TranslateLanguage.ENGLISH).setTargetLanguage(TranslateLanguage.GERMAN).build();
         englishGermanTranslator = Translation.getClient(options);

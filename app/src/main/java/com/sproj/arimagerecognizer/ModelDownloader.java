@@ -1,5 +1,6 @@
 package com.sproj.arimagerecognizer;
 
+import android.app.DownloadManager;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -9,9 +10,12 @@ import com.google.mlkit.common.model.RemoteModelManager;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.nl.translate.TranslateRemoteModel;
 
+
 public class ModelDownloader {
     private static final String TAG = "ModelDownloader";
-    void downloader(String language, onDownloadStatus successFunction,onDownloadStatus failureFunction) {
+    private Boolean languageAvailable = Boolean.FALSE;
+
+    void downloader(String language, onDownloadStatus successFunction, onDownloadStatus failureFunction) {
         RemoteModelManager modelManager = RemoteModelManager.getInstance();
 
         // Define the French model to download
@@ -19,11 +23,13 @@ public class ModelDownloader {
 
         // Set conditions for downloading the model (requires Wi-Fi in this case)
         DownloadConditions conditions = new DownloadConditions.Builder()
-                .requireWifi()
+                //.requireWifi()
                 .build();
         // ToDo: check if model already exists in local db
+
         // Download the French model with the specified conditions
         // TODO: Before calling this method, show a user rational that the model is downloading, user is not allowed to access
+
         modelManager.download(translateRemoteModel, conditions)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -32,6 +38,7 @@ public class ModelDownloader {
                         // TODO: hide rational indicating the download was successful
                         // TODO: update local db that model was successfully downloaded
                         Log.d(TAG, "onSuccess: ");
+                        languageAvailable = true;
                         successFunction.invoke();
                     }
                 })
@@ -41,7 +48,8 @@ public class ModelDownloader {
                         // Handle download error
                         // TODO: hide rational indicating the download was failure
                         Log.d(TAG, "onFailure");
-
+                        languageAvailable = false;
+                        failureFunction.invoke();
                     }
                 });
     }

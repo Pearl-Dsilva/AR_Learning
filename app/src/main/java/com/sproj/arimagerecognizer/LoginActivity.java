@@ -44,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             loginUser(username, password);
         });
 
-        new ModelDownloader().downloader(TranslateLanguage.FRENCH, () -> {
-            Toast.makeText(this, "Downloaded", Toast.LENGTH_SHORT).show();
-        }, () -> {
-            Toast.makeText(this, "Not Downloaded", Toast.LENGTH_SHORT).show();
-        });
+//        new ModelDownloader().downloader(TranslateLanguage.FRENCH, () -> {
+//            Toast.makeText(this, "Downloaded", Toast.LENGTH_SHORT).show();
+//        }, () -> {
+//            Toast.makeText(this, "Not Downloaded", Toast.LENGTH_SHORT).show();
+//        });
 
     }
 

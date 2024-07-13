@@ -30,7 +30,7 @@ import com.sproj.arimagerecognizer.arhelper.common.samplerender.SampleRender
 /**
  * Wraps [R.layout.activity_main] and controls lifecycle operations for [GLSurfaceView].
  */
-////added 08/07/24
+
 //private lateinit var loading: ConstraintLayout
 
 class MainActivityView(val activity: ARActivity, renderer: AppRenderer) : DefaultLifecycleObserver {
