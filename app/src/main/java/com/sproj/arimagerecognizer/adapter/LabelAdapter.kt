@@ -1,6 +1,7 @@
 package com.sproj.arimagerecognizer.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.util.Pair
 import android.view.LayoutInflater
@@ -11,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sproj.arimagerecognizer.adapter.LabelAdapter.LabelViewHolder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
@@ -20,7 +20,9 @@ import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.Translator
 import com.google.mlkit.nl.translate.TranslatorOptions
+import com.sproj.arimagerecognizer.LanguageManager
 import com.sproj.arimagerecognizer.R
+import com.sproj.arimagerecognizer.adapter.LabelAdapter.LabelViewHolder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,22 +34,34 @@ import java.io.IOException
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 
-class LabelAdapter(private val context: Context) : RecyclerView.Adapter<LabelViewHolder>() {
+class LabelAdapter(
+    private val context: Context,
+    sharedPreferences: SharedPreferences
+) : RecyclerView.Adapter<LabelViewHolder>() {
 
     private var labels: List<Pair<String, Date>>
     private lateinit var translations: MutableList<String>
     private var options: TranslatorOptions
-    private var englishGermanTranslator: Translator
+    private var languageTranslator: Translator
     private var loadedModel: AtomicBoolean
     private var activeCoroutinesCount = 0
 
     init {
         labels = ArrayList()
+        val languageManager = LanguageManager(sharedPreferences)
+        val languagesArray = ArrayList(LanguageManager.availableLanguages.keys)
+
+        var targetLanguage =
+            languageManager.availableLanguage.get(languagesArray[languageManager.language])
+        if (targetLanguage == null) {
+            targetLanguage = TranslateLanguage.ENGLISH
+        }
         options = TranslatorOptions.Builder()
             .setSourceLanguage(TranslateLanguage.ENGLISH)
-            .setTargetLanguage(TranslateLanguage.GERMAN)
+            .setTargetLanguage(targetLanguage)
             .build()
-        englishGermanTranslator = Translation.getClient(options)
+        Log.d(TAG, "language: ${languagesArray.get(languageManager.language)}")
+        languageTranslator = Translation.getClient(options)
         loadedModel = AtomicBoolean(false)
     }
 
@@ -65,7 +79,7 @@ class LabelAdapter(private val context: Context) : RecyclerView.Adapter<LabelVie
                     .show()
             }
 
-            englishGermanTranslator.downloadModelIfNeeded(conditions).await()
+            languageTranslator.downloadModelIfNeeded(conditions).await()
         } catch (exception: Exception) {
             loadedModel.set(false)
             Log.e(TAG, "Error downloading translation model: ", exception)
@@ -84,7 +98,7 @@ class LabelAdapter(private val context: Context) : RecyclerView.Adapter<LabelVie
             downloadModelIfNeeded(conditions)
 
         // Translate the text (suspend function)
-        val translatedText = englishGermanTranslator.translate(text).await()
+        val translatedText = languageTranslator.translate(text).await()
 
         Log.d(TAG, "translateText: Text Translated $translatedText")
         return translatedText

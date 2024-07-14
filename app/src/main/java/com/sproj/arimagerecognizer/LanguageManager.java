@@ -9,7 +9,7 @@ import java.util.Map;
 public class LanguageManager {
     SharedPreferences sharedPreferences;
 
-    static final Map<String, String> availableLanguages = Map.of(
+    public static final Map<String, String> availableLanguages = Map.of(
             "CHINESE", TranslateLanguage.CHINESE,
             "SPANISH", TranslateLanguage.SPANISH,
             "FRENCH", TranslateLanguage.FRENCH,
