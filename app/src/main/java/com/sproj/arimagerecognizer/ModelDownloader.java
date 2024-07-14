@@ -1,7 +1,8 @@
 package com.sproj.arimagerecognizer;
 
-import android.app.DownloadManager;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,7 +16,12 @@ public class ModelDownloader {
     private static final String TAG = "ModelDownloader";
     private Boolean languageAvailable = Boolean.FALSE;
 
-    void downloader(String language, onDownloadStatus successFunction, onDownloadStatus failureFunction) {
+    void downloader(Context context, String language, onDownloadStatus successFunction, onDownloadStatus failureFunction) {
+        if (!NetworkUtil.isInternetAvailable(context)){
+            failureFunction.invoke("Download Failed, Network Not Available");
+            Log.d(TAG, "downloader: download failed");
+            return;
+        }
         RemoteModelManager modelManager = RemoteModelManager.getInstance();
 
         // Define the French model to download
@@ -23,7 +29,7 @@ public class ModelDownloader {
 
         // Set conditions for downloading the model (requires Wi-Fi in this case)
         DownloadConditions conditions = new DownloadConditions.Builder()
-                //.requireWifi()
+//                .requireWifi()
                 .build();
         // ToDo: check if model already exists in local db
 
@@ -39,7 +45,7 @@ public class ModelDownloader {
                         // TODO: update local db that model was successfully downloaded
                         Log.d(TAG, "onSuccess: ");
                         languageAvailable = true;
-                        successFunction.invoke();
+                        successFunction.invoke("Model Downloaded Successfully");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -49,8 +55,13 @@ public class ModelDownloader {
                         // TODO: hide rational indicating the download was failure
                         Log.d(TAG, "onFailure");
                         languageAvailable = false;
-                        failureFunction.invoke();
+                        failureFunction.invoke("Model Downloaded Failed, Retry?");
                     }
+                }).addOnCanceledListener(() -> {
+                    Log.d(TAG, "downloader: cancelled");
+
+                }).addOnCompleteListener(listener -> {
+                    Log.d(TAG, "downloader: completed"+listener);
                 });
     }
 

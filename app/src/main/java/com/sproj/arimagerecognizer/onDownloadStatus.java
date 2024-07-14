@@ -1,5 +1,5 @@
 package com.sproj.arimagerecognizer;
 
 public interface onDownloadStatus {
-    public void invoke();
+    public void invoke(String message);
 }

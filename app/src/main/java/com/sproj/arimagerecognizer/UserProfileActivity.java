@@ -1,6 +1,7 @@
 package com.sproj.arimagerecognizer;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,11 +77,75 @@ public class UserProfileActivity extends AppCompatActivity {
                     languageManager.languageSelected(position);
                 } else {
                     //TODO: show download confirmation (dialog OK, model is not available, should we download? space needed
-                    //todo: if user chooses to download, show blocking dialog with indeterminate progress
-                    //todo: when download successful, show user success dialog, set
-                    // languageManager.modelDownloaded(availableLanguages.get(position));
-                    // languageManager.languageSelected(position);
-                    // todo: when download fails, show user a failure dialog
+                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
+                            .setIcon(R.drawable.baseline_info_24)
+                            .setTitle("Info")
+                            .setMessage("This language model is currently unavailable. Would you like to download it? Downloading will increase the app size and require an internet connection.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //todo: if user chooses to download, show blocking dialog with indeterminate progress
+                                    dialog.dismiss();
+
+                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
+                                            .setIcon(R.mipmap.ic_launcher_foreground)
+                                            .setTitle("Downloading...")
+                                            .setMessage("Downloading language model.")
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    //todo: when download successful, show user success dialog, set
+                                                    languageManager.modelDownloaded(availableLanguages.get(position));
+                                                    languageManager.languageSelected(position);
+                                                }
+                                            })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    // todo: when download fails, show user a failure dialog
+                                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
+                                                            .setIcon(R.mipmap.ic_launcher_foreground)
+                                                            .setTitle("Info")
+                                                            .setMessage("Download Failed.")
+                                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    dialog.dismiss();
+                                                                }
+                                                            })
+                                                            .setNegativeButton("CANCEL", null)
+                                                            .show();
+                                                }
+                                            })
+                                            .create()
+                                            .show();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    // todo: when download fails, show user a failure dialog
+                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
+                                            .setIcon(R.mipmap.ic_launcher_foreground)
+                                            .setTitle("Info")
+                                            .setMessage("Download Failed.")
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .setNegativeButton("CANCEL", null)
+                                            .show();
+                                }
+                            })
+                            .create()
+                            .show();
+
+
                 }
             }
 
