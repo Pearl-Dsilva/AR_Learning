@@ -59,5 +59,6 @@
   <string name="loading_please_wait_too">Loading... Please Wait</string>
   <string name="current_password">Current Password</string>
   <string name="language_selection">Language_Selection</string>
+    <string name="information">Info</string>
 
 </resources>

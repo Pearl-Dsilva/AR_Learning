@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
+    android:orientation="vertical"
     tools:context="com.sproj.arimagerecognizer.UserProfileActivity"
     tools:ignore="MissingClass">
 
@@ -16,72 +17,63 @@
         android:background="@color/soft_peach"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:titleTextColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:title="Profile" />
 
 
     <!-- Username TextView -->
-    <TextView
-        android:id="@+id/textViewUsername"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:text="@string/username"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfileTitle" />
 
     <!-- Language TextView -->
     <TextView
-        android:id="@+id/languageTextView"
-        android:layout_width="0dp"
+        android:id="@+id/textViewUsername"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_margin="10dp"
+        android:text="@string/username"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/languageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/Language"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
+        android:textAlignment="center" />
 
     <!-- Change Password Button -->
-    <Button
-        android:id="@+id/buttonChangePassword"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/lightpink"
-        android:text="@string/Changepassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/languageTextView" />
-
-    <!-- Language Spinner -->
     <Spinner
         android:id="@+id/spinnerLanguage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:background="@drawable/spinner_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChangePassword" />
+        android:layout_margin="10dp"
+        android:background="@drawable/spinner_background" />
+
+    <Button
+        android:id="@+id/buttonChangeLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/lightpink"
+        android:text="CHANGE LANGUAGE" />
+
+    <!-- Language Spinner -->
 
     <!-- Logout Button -->
+
+    <Button
+        android:id="@+id/buttonChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/Changepassword" />
+
     <Button
         android:id="@+id/buttonLogout"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_margin="36dp"
         android:backgroundTint="@color/lightpink"
-        android:text="@string/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerLanguage" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/logout" />
+</LinearLayout>
 
 
 

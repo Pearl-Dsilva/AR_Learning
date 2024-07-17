@@ -66,11 +66,13 @@ class ARActivity : AppCompatActivity() {
           if (session.isDepthModeSupported(Config.DepthMode.AUTOMATIC)) {
             depthMode = Config.DepthMode.AUTOMATIC
           }
+
         }
       )
 
       val filter = CameraConfigFilter(session)
         .setFacingDirection(CameraConfig.FacingDirection.BACK)
+
       val configs = session.getSupportedCameraConfigs(filter)
       val sort = compareByDescending<CameraConfig> { it.imageSize.width }
         .thenByDescending { it.imageSize.height }

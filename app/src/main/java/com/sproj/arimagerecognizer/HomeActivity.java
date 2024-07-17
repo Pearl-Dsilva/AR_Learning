@@ -122,15 +122,15 @@ public class HomeActivity extends AppCompatActivity {
                 downloadModel();
             });
         }
-        //check if user first time, call isSetupCompleted, continue if false
-        //show dialog to select language (first time)
-        //save lang preference, call SetupCompleted
+//        check if user first time, call isSetupCompleted, continue if false
+//        show dialog to select language (first time)
+//        save lang preference, call SetupCompleted
 //        languageManager.modelDownloaded(availableLanguages.get(position));
 //        languageManager.languageSelected(position);
     }
 
     void downloadModel() {
-//start model download
+        //start model download
         LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
         View customView = inflater.inflate(R.layout.model_downloading_alert, null);
 
@@ -167,6 +167,5 @@ public class HomeActivity extends AppCompatActivity {
                     dismissModel.setEnabled(true);
 
                 });
-
     }
 }
