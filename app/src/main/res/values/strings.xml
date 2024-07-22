@@ -23,16 +23,23 @@
   <string name="clear">Clear</string>
   <string name="use_cloud_ml">Use Cloud ML</string>
   <string name="open_camera">Open Camera</string>
-  <string name="new_password">New Password</string>
-  <string name="confirm_new_password">Confirm New Password</string>
+  <string name="new_password">Password</string>
+  <string name="confirm_new_password">Confirm Password</string>
   <string name="Changepassword">Change Password</string>
   <string name="help_text">Welcome to AR Learning App! Here you can learn how to navigate through the app and make the most of its features. If you have any questions, feel free to contact our support team.</string>
     <string name="login">Login</string>
   <string name="username">Username</string>
+  <string name="email">Email</string>
+    <string name="hi">Hi!!</string>
+    <string name="create">Create a new Account</string>
+  <string name="enter_email">Enter your Email</string>
+  <string name="loading">Loading...</string>
+    <string name="reg">Register</string>
   <string name="password">Password</string>
   <string name="logout">Logout</string>
   <string name="Language">Language</string>
   <string name="create_account_text">Don\'t have an account? Sign Up</string>
+    <string name="register_account">Already have an account? Log In</string>
   <string name="login_text">login</string>
     <string name="menu">Menu</string>
   <string name="graphic_for_ar_camera">Graphic for AR camera</string>
@@ -42,23 +49,6 @@
   <string name="study">Study</string>
   <string name="test_graphic">Test graphic</string>
   <string name="test">Test</string>
-    <string name="already_have_an_account_log_in">Already have an account? Log In</string>
-  <string name="register">REGISTER</string>
-  <string name="loading">Loading...</string>
-  <string name="email">Email</string>
-  <string name="create_a_new_account">Create a new account</string>
-  <string name="hi">Hi!</string>
-  <string name="confirm_password">Confirm Password</string>
-  <string name="loadingtoo">Loading...</string>
-  <string name="loading_please_wait">Loading... Please Wait</string>
-  <string name="ar_language_learning_app">AR Language Learning App</string>
-  <string name="quiz">Quiz</string>
-  <string name="what_is_this">What is this?</string>
-  <string name="answer">Answer</string>
-  <string name="submit">Submit</string>
-  <string name="loading_please_wait_too">Loading... Please Wait</string>
-  <string name="current_password">Current Password</string>
-  <string name="language_selection">Language_Selection</string>
-    <string name="information">Info</string>
+
 
 </resources>

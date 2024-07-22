@@ -29,4 +29,5 @@
   <color name="button_color">#F5A9A9</color>
   <color name="text_color">#FF000000</color>
   <color name="soft_peach">#F5C3A9</color>
+  <color name="header_color">#006666</color>
 </resources>
