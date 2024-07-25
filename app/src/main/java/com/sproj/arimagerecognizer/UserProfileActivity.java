@@ -176,7 +176,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         message.setText("Downloading language model.");
         androidx.appcompat.app.AlertDialog downloadingAlert = new MaterialAlertDialogBuilder(this).setIcon(R.mipmap.ic_launcher_foreground).setView(customView).create();
-
+        downloadingAlert.setCanceledOnTouchOutside(false);
         dismissModel.setEnabled(false);
         downloadingAlert.show();
 //        Log.d(TAG, "downloadModel: " + availableLanguages.get(languageManager.getLanguage()));

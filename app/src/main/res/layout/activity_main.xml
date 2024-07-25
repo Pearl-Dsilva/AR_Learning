@@ -28,7 +28,7 @@
     <android.opengl.GLSurfaceView
         android:id="@+id/surfaceview"
         android:layout_width="fill_parent"
-        android:layout_height="758dp" />
+        android:layout_height="fill_parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -53,14 +53,6 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/useCloudMlSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:background="#55FFFFFF"
-        android:padding="16dp"
-        android:text="@string/use_cloud_ml" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loading_indicator1"

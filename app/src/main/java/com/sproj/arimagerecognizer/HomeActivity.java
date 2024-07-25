@@ -113,8 +113,9 @@ public class HomeActivity extends AppCompatActivity {
             languageSpinner.setSelection(0); // default lang chinese
 
 
-            AlertDialog initialLanguageSelectionDialog = new MaterialAlertDialogBuilder(HomeActivity.this).setIcon(R.mipmap.ic_launcher_foreground).setTitle("Language Selection").setMessage("Select language of your choice.").setView(customView).create();
+            AlertDialog initialLanguageSelectionDialog = new MaterialAlertDialogBuilder(HomeActivity.this).setIcon(R.mipmap.ic_launcher_foreground).setTitle("Language Selection").setMessage("Select language you wish to learn.").setView(customView).create();
             initialLanguageSelectionDialog.show();
+            initialLanguageSelectionDialog.setCanceledOnTouchOutside(false);
 
             selectLanguageInitial.setOnClickListener(view -> {
                 languageManager.languageSelected((int) languageSpinner.getSelectedItemId());
@@ -140,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
 
         message.setText("Downloading language model.");
         AlertDialog downloadingAlert = new MaterialAlertDialogBuilder(this).setIcon(R.mipmap.ic_launcher_foreground).setView(customView).create();
-
+        downloadingAlert.setCanceledOnTouchOutside(false);
         dismissModel.setEnabled(false);
         downloadingAlert.show();
         Log.d(TAG, "downloadModel: " + availableLanguages.get(languageManager.getLanguage()));

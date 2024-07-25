@@ -88,9 +88,7 @@ class AppRenderer(val activity: ARActivity) : DefaultLifecycleObserver, SampleRe
             hideSnackbar()
         }
 
-        view.useCloudMlSwitch.setOnCheckedChangeListener { _, isChecked ->
-//            currentAnalyzer = if (isChecked) gcpAnalyzer else mlKitAnalyzer
-        }
+
 
 //        val gcpConfigured = gcpAnalyzer.credentials != null
 //        view.useCloudMlSwitch.isChecked = gcpConfigured
