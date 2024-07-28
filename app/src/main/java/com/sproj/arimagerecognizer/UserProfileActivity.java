@@ -55,8 +55,9 @@ public class UserProfileActivity extends AppCompatActivity {
         String language = sharedPreferences.getString("Language", "Language Not Chosen");
         ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
 
-        usernameTextView.setText(username);
+//        usernameTextView.setText(username);
         languageTextView.setText(language);
+        usernameTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail().trim());
 
         // If you want to perform actions when a new language is selected:
         Spinner spinnerLanguage = findViewById(R.id.spinnerLanguage);
@@ -64,99 +65,13 @@ public class UserProfileActivity extends AppCompatActivity {
         languageAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(languageAdaptor);
         spinnerLanguage.setSelection(languageManager.getLanguage());
+        languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
 
         buttonChangeLanguage.setOnClickListener(view -> {
             languageManager.languageSelected((int) spinnerLanguage.getSelectedItemId());
             Log.d(TAG, "onCreate: spinner language selected: "+availableLanguages.get(languageManager.getLanguage()));
             downloadModel(availableLanguages.get(languageManager.getLanguage()));
         });
-//        //todo: [Pearl] apply same logic as home activity page
-//        spinnerLanguage.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                // You could save the selected language preference here and refresh your activity to apply the language
-//                boolean isDownloaded = languageManager.isModelDownloaded(availableLanguages.get(position));
-//                if (isDownloaded) {
-//                    languageManager.languageSelected(position);
-//                } else {
-//                    //TODO: show download confirmation (dialog OK, model is not available, should we download? space needed
-//                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
-//                            .setIcon(R.drawable.baseline_info_24)
-//                            .setTitle("Info")
-//                            .setMessage("This language model is currently unavailable. Would you like to download it? Downloading will increase the app size and require an internet connection.")
-//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    //todo: if user chooses to download, show blocking dialog with indeterminate progress
-//                                    dialog.dismiss();
-//
-//                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
-//                                            .setIcon(R.mipmap.ic_launcher_foreground)
-//                                            .setTitle("Downloading...")
-//                                            .setMessage("Downloading language model.")
-//                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    dialog.dismiss();
-//                                                    //todo: when download successful, show user success dialog, set
-//                                                    languageManager.modelDownloaded(availableLanguages.get(position));
-//                                                    languageManager.languageSelected(position);
-//                                                }
-//                                            })
-//                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialog, int which) {
-//                                                    dialog.dismiss();
-//                                                    // todo: when download fails, show user a failure dialog
-//                                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
-//                                                            .setIcon(R.mipmap.ic_launcher_foreground)
-//                                                            .setTitle("Info")
-//                                                            .setMessage("Download Failed.")
-//                                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                                                @Override
-//                                                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                                                    dialog.dismiss();
-//                                                                }
-//                                                            })
-//                                                            .setNegativeButton("CANCEL", null)
-//                                                            .show();
-//                                                }
-//                                            })
-//                                            .create()
-//                                            .show();
-//                                }
-//                            })
-//                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    dialog.dismiss();
-//                                    // todo: when download fails, show user a failure dialog
-//                                    new MaterialAlertDialogBuilder(UserProfileActivity.this)
-//                                            .setIcon(R.mipmap.ic_launcher_foreground)
-//                                            .setTitle("Info")
-//                                            .setMessage("Download Failed.")
-//                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                                    dialog.dismiss();
-//                                                }
-//                                            })
-//                                            .setNegativeButton("CANCEL", null)
-//                                            .show();
-//                                }
-//                            })
-//                            .create()
-//                            .show();
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // Another interface callback
-//            }
-//        });
 
         //logout of the account
         logoutButton.setOnClickListener(listener -> logoutUser());

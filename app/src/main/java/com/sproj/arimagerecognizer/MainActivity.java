@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         splashScreen = SplashScreen.installSplashScreen(this);
+        splashScreen.setKeepOnScreenCondition(() -> false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_2);
 
@@ -27,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mAuth.getCurrentUser() == null) {
-            splashScreen.setKeepOnScreenCondition(() -> false);
+//            splashScreen.setKeepOnScreenCondition(() -> false);
             startActivity(new Intent(this, LoginActivity.class));
         } else {
             Log.d(TAG, "onCreate: "+mAuth.getCurrentUser().getEmail());
-            splashScreen.setKeepOnScreenCondition(() -> false);
+//            splashScreen.setKeepOnScreenCondition(() -> false);
             startActivity(new Intent(this, HomeActivity.class));
         }
         finish();

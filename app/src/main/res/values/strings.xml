@@ -15,7 +15,7 @@
 -->
 
 <resources>
-  <string name="app_name">AR Learning App</string>
+  <string name="app_name">FluentAR</string>
   <string name="scan_busy">Wait</string>
   <string name="scan_available">Scan</string>
   <string name="info">Please login with your information</string>
