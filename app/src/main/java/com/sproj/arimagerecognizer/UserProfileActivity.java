@@ -71,6 +71,8 @@ public class UserProfileActivity extends AppCompatActivity {
             languageManager.languageSelected((int) spinnerLanguage.getSelectedItemId());
             Log.d(TAG, "onCreate: spinner language selected: "+availableLanguages.get(languageManager.getLanguage()));
             downloadModel(availableLanguages.get(languageManager.getLanguage()));
+            languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
+
         });
 
         //logout of the account

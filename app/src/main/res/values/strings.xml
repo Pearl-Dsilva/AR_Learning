@@ -64,5 +64,6 @@
   <string name="current_password">Current Password</string>
   <string name="language_selection">Language_Selection</string>
   <string name="information">Info</string>
+    <string name="take_a_test_to_know_your_progress">Take a test to know your progress</string>
 
 </resources>

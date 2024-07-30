@@ -34,10 +34,19 @@ import java.io.IOException
 import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 
+enum class State {
+    STARTED,
+    RUNNING,
+
+
+}
+
+
 class LabelAdapter(
     private val context: Context,
-    sharedPreferences: SharedPreferences
-) : RecyclerView.Adapter<LabelViewHolder>() {
+    sharedPreferences: SharedPreferences,
+
+    ) : RecyclerView.Adapter<LabelViewHolder>() {
 
     private var labels: List<Pair<String, Date>>
     private lateinit var translations: MutableList<String>

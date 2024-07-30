@@ -17,6 +17,7 @@
 package com.sproj.arimagerecognizer.arhelper.ml
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -54,12 +55,14 @@ class ARCoreSessionLifecycleHelper(
     // Request an installation if necessary.
     when (ArCoreApk.getInstance().requestInstall(activity, !installRequested)!!) {
       ArCoreApk.InstallStatus.INSTALL_REQUESTED -> {
+        Log.d("ARCoreSessionLifecycle", "ARCore not Installed ")
         installRequested = true
         // tryCreateSession will be called again, so we return null for now.
         return null
       }
       ArCoreApk.InstallStatus.INSTALLED -> {
         // Left empty; nothing needs to be done
+        Log.d("ARCoreSessionLifecycle", "ARCore Installed ")
       }
     }
 

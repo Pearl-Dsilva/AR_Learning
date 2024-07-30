@@ -37,6 +37,11 @@ public class StudyActivity extends AppCompatActivity {
         loadDataFromFirestore();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void loadDataFromFirestore() {
         Log.d(TAG, "loadDataFromFirestore: Flag 1");
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
