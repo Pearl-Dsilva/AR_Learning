@@ -99,18 +99,20 @@ public class QuizActivity extends AppCompatActivity {
                 loading.setVisibility(View.GONE); // Stop showing the loading indicator on submit
 
                 if (translatedWord == null || selectedValue.trim().equalsIgnoreCase(translatedWord)) {
-                    builder.setPositiveButton("Next", (dialog, which) -> {
+                    builder
+                            .setPositiveButton("Next", (dialog, which) -> {
 
-                        updateStudyStatus(word);
+                                updateStudyStatus(word);
 
-                        dialog.dismiss();
+                                dialog.dismiss();
 
-                        startQuiz(0);
+                                startQuiz(0);
 
-                    }).setNegativeButton("Cancel", (dialog, which) -> {
-                        dialog.dismiss();
-                        finish();
-                    });
+                            })
+                            .setNegativeButton("Cancel", (dialog, which) -> {
+                                dialog.dismiss();
+                                finish();
+                            });
 
                     builder.create().show();
                 } else {
@@ -296,7 +298,7 @@ public class QuizActivity extends AppCompatActivity {
         return results;
     }
 
-
+    //todo: implement updateStudyStatus
     void updateStudyStatus(String itemName) {
 
     }

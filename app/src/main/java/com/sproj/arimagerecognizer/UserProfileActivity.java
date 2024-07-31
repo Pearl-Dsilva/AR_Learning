@@ -189,7 +189,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         return;
                     }
 
-                    // TODO: Implement the logic to change the password
+                    // TODO: Implement the logic to change the password or update it
 
 
                 })

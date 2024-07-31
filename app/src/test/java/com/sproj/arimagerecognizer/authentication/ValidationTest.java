@@ -11,7 +11,6 @@ public class ValidationTest extends TestCase {
     private TestObject[] passwords;
     private TestObject[] repeatPassword;
     public void setUpEmails() {
-        // TODO: Implement as many cases as possible
         emails = new TestObject[]{
                 new TestObject("user.gmail", false),
                 new TestObject("user1@gmail.com", true),
@@ -24,7 +23,6 @@ public class ValidationTest extends TestCase {
     }
 
     public void setPasswords() {
-        // TODO: Implement as many cases as possible
         passwords = new TestObject[]{
                 new TestObject("A3@dfG7!", true),
                 new TestObject("user1@gmail.com", false),
@@ -37,7 +35,6 @@ public class ValidationTest extends TestCase {
     }
 
     public void setRepeatPasswords() {
-        // TODO: Implement as many cases as possible
         repeatPassword = new TestObject[]{
                 new TestObject("user.gmail", "user.gmail", true),
                 new TestObject("user1@gmail.com", "user.gmail", false),

@@ -16,6 +16,7 @@ import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.sproj.arimagerecognizer.authentication.AuthenticationResult;
 import com.sproj.arimagerecognizer.authentication.Validation;
 
+//Todo: Implement forgot password
 
 public class LoginActivity extends AppCompatActivity {
 

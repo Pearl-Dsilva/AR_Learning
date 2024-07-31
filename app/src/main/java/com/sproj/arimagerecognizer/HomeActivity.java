@@ -61,25 +61,21 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         buttonQuiz.setOnClickListener(view -> {
-            // TODO: Start the Quiz Activity
             Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
             startActivity(intent);
         });
 
         buttonStudy.setOnClickListener(view -> {
-            // TODO: Start the Study Activity
             Intent intent = new Intent(HomeActivity.this, StudyActivity.class);
             startActivity(intent);
         });
 
         imageViewSettings.setOnClickListener(view -> {
-            // TODO: Show settings options
             Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
             startActivity(intent);
         });
 
         imageViewHelp.setOnClickListener(view -> {
-            // TODO: Show help information
             Intent intent = new Intent(HomeActivity.this, HelpActivity.class);
             startActivity(intent);
         });

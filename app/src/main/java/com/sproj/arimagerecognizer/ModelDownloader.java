@@ -31,18 +31,13 @@ public class ModelDownloader {
         DownloadConditions conditions = new DownloadConditions.Builder()
 //                .requireWifi()
                 .build();
-        // ToDo: check if model already exists in local db
 
-        // Download the French model with the specified conditions
-        // TODO: Before calling this method, show a user rational that the model is downloading, user is not allowed to access
 
         modelManager.download(translateRemoteModel, conditions)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         // Model downloaded successfully
-                        // TODO: hide rational indicating the download was successful
-                        // TODO: update local db that model was successfully downloaded
                         Log.d(TAG, "onSuccess: ");
                         languageAvailable = true;
                         successFunction.invoke("Model Downloaded Successfully");
@@ -52,7 +47,6 @@ public class ModelDownloader {
                     @Override
                     public void onFailure(Exception e) {
                         // Handle download error
-                        // TODO: hide rational indicating the download was failure
                         Log.d(TAG, "onFailure");
                         languageAvailable = false;
                         failureFunction.invoke("Model Downloaded Failed, Retry?");
