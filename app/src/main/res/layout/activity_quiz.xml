@@ -13,14 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/textViewProfileTitle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/soft_peach"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="@string/quizwelcome"
+            tools:ignore="MissingConstraints" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
             android:text="@string/quiz"
-            android:textSize="34sp"
+            android:textSize="44sp"
             android:textStyle="bold"
+            android:textColor="@color/header_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -103,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:text="@string/submit"
+            android:background="@drawable/button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -137,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/loading_please_wait_too"
+            android:text="@string/loading_please_wait"
             android:textColor="#FFFFFF"
 
             app:layout_constraintEnd_toEndOf="parent"

@@ -48,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         CardView buttonQuiz = findViewById(R.id.cardTest);
         CardView buttonStudy = findViewById(R.id.cardStudy);
         ImageView imageViewSettings = findViewById(R.id.imageViewSettings);
+
         ImageView imageViewHelp = findViewById(R.id.imageViewHelp);
 
         languageManager = new LanguageManager(getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
