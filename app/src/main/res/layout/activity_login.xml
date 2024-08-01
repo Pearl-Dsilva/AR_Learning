@@ -127,6 +127,16 @@
                 android:layout_gravity="center"
                 android:alpha="0.7"/>
 
+            <TextView
+                android:id="@+id/forgotPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_pass"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:alpha="0.7"/>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
