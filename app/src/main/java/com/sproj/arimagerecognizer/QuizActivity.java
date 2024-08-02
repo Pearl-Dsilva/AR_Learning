@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,6 +51,8 @@ public class QuizActivity extends AppCompatActivity {
     private Handler mainHandler;
     private Translator translator;
     private List<Boolean> ignoranceList;
+    private final ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
+    LanguageManager languageManager;
 
     private int randomIndex = -1;
 
@@ -66,10 +69,12 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.loading_indicator).setVisibility(View.VISIBLE); // Initially showing the loading indicator
         quizImageView = findViewById(R.id.item_image); // Shows the question image
 
+        languageManager = new LanguageManager(getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
+
         translator = Translation.getClient(
                 new TranslatorOptions.Builder()
                         .setSourceLanguage(TranslateLanguage.ENGLISH)
-                        .setTargetLanguage(TranslateLanguage.SPANISH)
+                        .setTargetLanguage(Objects.requireNonNull(languageManager.getAvailableLanguage().get(availableLanguages.get(languageManager.getLanguage()))))
                         .build());
 
         findViewById(R.id.submit_button).setOnClickListener(listener -> {
@@ -298,9 +303,19 @@ public class QuizActivity extends AppCompatActivity {
         return results;
     }
 
-    //todo: implement updateStudyStatus
     void updateStudyStatus(String itemName) {
+        String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+        assert email != null;
 
+        DocumentReference documentReference = db.collection("labels")
+                .document(email)
+                .collection("recognisedLabels")
+                .document(itemName);
+
+        documentReference
+                .update("completed", true)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully updated for " + itemName))
+                .addOnFailureListener(e -> Log.w(TAG, "Error updating document " + itemName, e));
     }
 
 
