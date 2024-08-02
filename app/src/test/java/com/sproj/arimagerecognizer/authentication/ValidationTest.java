@@ -14,31 +14,36 @@ public class ValidationTest extends TestCase {
         emails = new TestObject[]{
                 new TestObject("user.gmail", false),
                 new TestObject("user1@gmail.com", true),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
+                new TestObject("user.gmail@.com", false),
+                new TestObject("user.@gmail.com", false),
+                new TestObject("username@gmail.com", true),
+                new TestObject("user.gmail@.com", false),
+                new TestObject("username123@gmail.com", true),
         };
     }
 
     public void setPasswords() {
         passwords = new TestObject[]{
                 new TestObject("A3@dfG7!", true),
-                new TestObject("user1@gmail.com", false),
-                new TestObject("usd", false),
-                new TestObject("PassW0rd!", true),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
-                new TestObject("user.gmail", false),
+                new TestObject("ComplexP@ssw0rd12", true),
+                new TestObject("abc", false),
+                new TestObject("Passw0rd!", true),
+                new TestObject("A1b2C3d4$", false),
+                new TestObject("Secure@Pass123", true),
+                new TestObject("P@ss", false),
+
         };
     }
 
     public void setRepeatPasswords() {
         repeatPassword = new TestObject[]{
-                new TestObject("user.gmail", "user.gmail", true),
-                new TestObject("user1@gmail.com", "user.gmail", false),
-                new TestObject("user.gmail", "", false),
+                new TestObject("A3@dfG7!", "A3@dfG7!", true),
+                new TestObject("ComplexP@ssw0rd12", "ComplexP@ssw0rd12", true),
+                new TestObject("abc", "", false),
+                new TestObject("Passw0rd!", "ComplexP@ssw0rd12", false),
+                new TestObject("A1b2C3d4$", "A1b2C3d4$", true),
+                new TestObject("Secure#Pass123", "Secure#Pass123", true),
+                new TestObject("P@ss", "ComplexP@ssw0rd12", false),
         };
     }
 
