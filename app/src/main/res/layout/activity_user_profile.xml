@@ -55,64 +55,13 @@
         android:backgroundTint="@color/lightpink"
         android:text="CHANGE LANGUAGE" />
 
-    <!-- Language Spinner -->
-
-    <!-- Logout Button -->
-
-    <Button
-        android:id="@+id/buttonChangePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/Change_password" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="36dp"
+        android:layout_margin="10dp"
         android:backgroundTint="@color/lightpink"
         android:text="@string/logout" />
 </LinearLayout>
-
-
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/textViewUsername"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="[Username]"-->
-    <!--            android:layout_gravity="center"/>-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/languageTextView"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="[lanaguage]"-->
-    <!--            android:layout_gravity="center"/>-->
-
-
-    <!--        <Button-->
-    <!--            android:id="@+id/buttonChangePassword"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="Change Password"/>-->
-
-    <!--        <Spinner-->
-    <!--            android:id="@+id/spinnerLanguage"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:entries="@array/language_options"-->
-    <!--            android:layout_marginTop="8dp"/>-->
-
-    <!--        &lt;!&ndash; Logout button &ndash;&gt;-->
-    <!--        <Button-->
-    <!--            android:id="@+id/buttonLogout"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:text="Logout"-->
-    <!--            android:layout_marginTop="16dp"/>-->
-
-
-    <!--    </LinearLayout>-->
 

@@ -19,8 +19,6 @@ import com.sproj.arimagerecognizer.authentication.Validation;
 
 import java.util.Objects;
 
-//Todo: Implement forgot password
-
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

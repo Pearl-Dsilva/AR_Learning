@@ -31,9 +31,8 @@ public class StudyActivity extends AppCompatActivity {
 
         RecyclerView lists = findViewById(R.id.recyclerViewVocabularySets);
         lists.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new LabelAdapter(this,getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
+        adapter = new LabelAdapter(getApplicationContext(),getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
         lists.setAdapter(adapter);
-
         loadDataFromFirestore();
     }
 

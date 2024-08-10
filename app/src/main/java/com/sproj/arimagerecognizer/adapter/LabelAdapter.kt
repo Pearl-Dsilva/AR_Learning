@@ -173,6 +173,11 @@ class LabelAdapter(
             e.printStackTrace()
             Log.e(TAG, "Error creating temporary file: " + e.message)
         }
+
+        Glide.with(context)
+            .load(R.drawable.textbox)
+            .into(holder.imageView)
+
         if (localFile != null) {
             // Download the image file to local storage
             val finalLocalFile: File = localFile

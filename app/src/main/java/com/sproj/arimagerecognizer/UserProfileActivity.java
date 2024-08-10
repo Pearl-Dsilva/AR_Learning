@@ -48,7 +48,6 @@ public class UserProfileActivity extends AppCompatActivity {
         TextView languageTextView = findViewById(R.id.languageTextView);
         Button buttonChangeLanguage = findViewById(R.id.buttonChangeLanguage);
         Button logoutButton = findViewById(R.id.buttonLogout);
-        Button buttonChangePassword = findViewById(R.id.buttonChangePassword);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "N/A");
@@ -79,7 +78,7 @@ public class UserProfileActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(listener -> logoutUser());
 
         // Setup change password button, this should navigate to a different screen where the user can change their password
-        buttonChangePassword.setOnClickListener(view -> showChangePasswordDialog());
+
     }
 
     void downloadModel(String languageSelected) {
@@ -131,73 +130,5 @@ public class UserProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    private void showChangePasswordDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
-        EditText editTextCurrentPassword = view.findViewById(R.id.editTextCurrentPassword);
-        Button verifyIdentityButton = view.findViewById(R.id.verifyButton);
-        EditText editTextNewPassword = view.findViewById(R.id.editTextNewPassword);
-        EditText editTextConfirmNewPassword = view.findViewById(R.id.editTextConfirmNewPassword);
-
-        builder.setView(view)
-                .setTitle("Change Password")
-                .setPositiveButton("Change", (dialog, which) -> {
-                    String currentPassword = editTextCurrentPassword.getText().toString().trim();
-                    String newPassword = editTextNewPassword.getText().toString().trim();
-                    String confirmPassword = editTextConfirmNewPassword.getText().toString().trim();
-
-                    if (currentPassword.isEmpty()) {
-                        Toast.makeText(UserProfileActivity.this, "Please fill current password", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    //not working
-                    verifyIdentityButton.setOnClickListener(newView -> {
-                        String email = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
-                        assert email != null;
-                        mAuth.signInWithEmailAndPassword(email, currentPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = task.getResult().getUser();
-                                    user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(UserProfileActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Exception e = task.getException();
-                                                assert e != null;
-                                                Toast.makeText(UserProfileActivity.this, e.toString().trim(), Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        });
-                    });
-
-
-                    // Add validation and change password logic here
-                    if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                        Toast.makeText(UserProfileActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    if (!newPassword.equals(confirmPassword)) {
-                        Toast.makeText(UserProfileActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    // TODO: Implement the logic to change the password or update it
-
-
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 
 }
