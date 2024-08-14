@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -22,13 +23,30 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/labeNotVisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#131111"
+                android:text=""
+                android:textColor="#F6F4F4" />
+
+            <TextView
                 android:id="@+id/textViewLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Label"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/translationNotVisible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#131111"
+                android:text=""
+                android:textColor="#E6DCDC" />
 
             <TextView
                 android:id="@+id/textViewTimestamp"
@@ -36,7 +54,8 @@
                 android:layout_height="wrap_content"
                 android:text="timestamp"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <ImageView
