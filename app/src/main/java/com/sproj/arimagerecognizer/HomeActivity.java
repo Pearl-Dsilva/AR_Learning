@@ -23,9 +23,14 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.sproj.arimagerecognizer.arhelper.ml.ARActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -34,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final String TAG = "HomeActivity";
     LanguageManager languageManager;
+    private final int TOP_N = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,39 @@ public class HomeActivity extends AppCompatActivity {
 
         logAppStarted();
         selectStartingLanguage();
+
+//        Example on how to query Data
+//        new LogEvent(
+//                FirebaseAuth.getInstance()
+//                        .getCurrentUser()
+//                        .getEmail())
+//                .getTodayTop(false)
+//                .addOnFailureListener(failure -> Log.e(TAG, "onFailure: " + failure.getMessage()))
+//                .addOnSuccessListener(success -> {
+//                    Log.d(TAG, "For Top Events: ");
+//                    if (success.isEmpty()) {
+//                        Log.d(TAG, "Empty Result");
+//                        return;
+//                    }
+//                    Map<String, Integer> emailCountMap = new HashMap<>();
+//
+//                    for (DocumentSnapshot documentSnapshot : success.getDocuments()) {
+//                        String email = documentSnapshot.getString("email");
+//                        if (email != null) {
+//                            emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
+//                        }
+//                    }
+//
+//                    List<Map.Entry<String, Integer>> topEmails = emailCountMap.entrySet().stream()
+//                            .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+//                            .limit(TOP_N)
+//                            .collect(Collectors.toList());
+//
+//                    for (Map.Entry<String, Integer> entry : topEmails) {
+//                        Log.d(TAG, "Email: " + entry.getKey() + ", Count: " + entry.getValue());
+//                    }
+//
+//                });
     }
 
     void logAppStarted() {
