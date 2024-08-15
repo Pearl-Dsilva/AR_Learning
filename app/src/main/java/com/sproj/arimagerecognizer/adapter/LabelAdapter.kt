@@ -143,7 +143,16 @@ class LabelAdapter(
                     translations[position] = result
                     withContext(Dispatchers.Main) {
 
-                        holder.textViewTimestamp.text = "Translation: ${translations[position]}"
+                        // Load Translation Data
+                        if (translations[position].isNotEmpty()) {
+                            holder.translationNotVisible.visibility = View.GONE
+                            holder.textViewTimestamp.visibility = View.VISIBLE
+                            holder.textViewTimestamp.text = "Translation: ${translations[position]}"
+                            holder.textViewLabel.visibility= View.VISIBLE
+                            holder.labeNotVisible.visibility = View.GONE
+                        }
+
+//                        holder.translationNotVisible.text = "Translation: ${translations[position]}"
                     }
                     decrementActiveCoroutinesCount()
                 }
@@ -152,8 +161,7 @@ class LabelAdapter(
             }
         }
 
-        // Load Translation Data
-        holder.textViewTimestamp.text = "Translation: ${translations[position]}"
+
 
         // Load image using Glide
         val imagePath =
@@ -175,7 +183,7 @@ class LabelAdapter(
         }
 
         Glide.with(context)
-            .load(R.drawable.textbox)
+            .load(R.drawable.imgs)
             .into(holder.imageView)
 
         if (localFile != null) {
@@ -199,14 +207,19 @@ class LabelAdapter(
     }
 
     class LabelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var labeNotVisible: TextView
+        var translationNotVisible: TextView
         var textViewLabel: TextView
         var textViewTimestamp: TextView
         var imageView: ImageView
+
 
         init {
             textViewLabel = itemView.findViewById(R.id.textViewLabel)
             textViewTimestamp = itemView.findViewById(R.id.textViewTimestamp)
             imageView = itemView.findViewById(R.id.item_img)
+            translationNotVisible = itemView.findViewById(R.id.translationNotVisible)
+            labeNotVisible = itemView.findViewById(R.id.labeNotVisible)
         }
     }
 
