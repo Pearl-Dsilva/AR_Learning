@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context="com.sproj.arimagerecognizer.UserProfileActivity"
     tools:ignore="MissingClass">
@@ -14,7 +13,6 @@
         android:id="@+id/textViewProfileTitle"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/soft_peach"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="Profile" />
@@ -74,7 +72,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="@color/white"
-        android:text="Delete Account"
+        android:text="Delete Data"
         android:textColor="@color/teal_700" />
 
 </LinearLayout>

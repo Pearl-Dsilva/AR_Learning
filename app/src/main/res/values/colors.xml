@@ -30,4 +30,5 @@
   <color name="text_color">#FF000000</color>
   <color name="soft_peach">#F5C3A9</color>
   <color name="header_color">#006666</color>
+  <color name="transparent">#00006666</color>
 </resources>

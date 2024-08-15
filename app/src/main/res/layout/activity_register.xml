@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/enter_email"
         android:inputType="textEmailAddress"
-        android:background="@drawable/textbox"
+        android:background="@drawable/textbox_background"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="10dp"/>
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/new_password"
         android:inputType="textPassword"
-        android:background="@drawable/textbox"
+        android:background="@drawable/textbox_background"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="10dp"/>
@@ -134,7 +134,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/confirm_new_password"
         android:inputType="textPassword"
-        android:background="@drawable/textbox"
+        android:background="@drawable/textbox_background"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:layout_marginTop="10dp"/>
@@ -143,13 +143,13 @@
         android:id="@+id/button_register_enter"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="35dp"
-        android:layout_marginLeft="35dp"
+        android:background="@drawable/rounded_button_blue"
         android:text="@string/reg"
-        android:background="@drawable/button"
-        android:textSize="18sp"
-        android:textColor="@color/teal_700"/>
+        android:textColor="@color/teal_700"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewSignUp"

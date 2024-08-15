@@ -35,7 +35,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Label"
-                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -53,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="timestamp"
-                android:textColor="@android:color/darker_gray"
                 android:textSize="14sp"
                 android:visibility="gone" />
         </LinearLayout>
@@ -62,7 +60,8 @@
             android:id="@+id/item_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            app:srcCompat="@drawable/item_image_skeleton" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

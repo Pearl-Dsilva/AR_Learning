@@ -12,15 +12,21 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -64,7 +70,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         buttonChangeLanguage.setOnClickListener(view -> {
             languageManager.languageSelected((int) spinnerLanguage.getSelectedItemId());
-            Log.d(TAG, "onCreate: spinner language selected: "+availableLanguages.get(languageManager.getLanguage()));
+            Log.d(TAG, "onCreate: spinner language selected: " + availableLanguages.get(languageManager.getLanguage()));
             downloadModel(availableLanguages.get(languageManager.getLanguage()));
             languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
 
@@ -74,7 +80,7 @@ public class UserProfileActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(listener -> logoutUser());
 
         //to delete account and their database
-        deleteButton.setOnClickListener(listener -> deleteUserAccount());
+        deleteButton.setOnClickListener(listener -> deleteUserData());
     }
 
     void downloadModel(String languageSelected) {
@@ -127,11 +133,52 @@ public class UserProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    private void deleteUserAccount(){
-        FirebaseUser user = mAuth.getCurrentUser();
-        CollectionReference transactionsRef = db.collection("labels/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() + "/recognisedLabels");
-        CollectionReference collectionRef = db.collection("labels/" + user.getEmail() + "/recognisedLabels");
+    public void deleteAllDocumentsInCollection(String collectionPath) {
+        db.collection(collectionPath)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int batchSize = 500;
+                    List<WriteBatch> batches = new ArrayList<>();
+                    WriteBatch currentBatch = db.batch();
+                    int operationCount = 0;
 
+                    for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                        if (operationCount >= batchSize) {
+                            batches.add(currentBatch);  // Store the current batch
+                            currentBatch = db.batch();  // Create a new batch
+                            operationCount = 0;         // Reset operation count
+                        }
+                        currentBatch.delete(document.getReference());
+                        operationCount++;
+                    }
+
+                    // Add the last batch if it's not empty
+                    if (operationCount > 0) {
+                        batches.add(currentBatch);
+                    }
+
+                    // Commit all batches
+                    for (WriteBatch batch : batches) {
+                        batch.commit()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("FirestoreBatchDelete", "Batch delete successful");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("FirestoreBatchDelete", "Batch delete failed: ", e);
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("FirestoreBatchDelete", "Error getting documents: ", e));
     }
 
+    private void deleteUserData() {
+        deleteAllDocumentsInCollection("labels/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() + "/recognisedLabels");
+        
+    }
 }
