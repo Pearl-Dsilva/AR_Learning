@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.google.android.libraries.intelligence.acceleration.Analytics;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +54,7 @@ public class QuizActivity extends AppCompatActivity {
     private List<Boolean> ignoranceList;
     private final ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
     LanguageManager languageManager;
-//    private FirebaseAnalytics mFirebaseAnalytics;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private int randomIndex = -1;
 
@@ -64,7 +63,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mainHandler = new Handler(Looper.getMainLooper());
         transactionList = new ArrayList<>();
@@ -114,7 +113,7 @@ public class QuizActivity extends AppCompatActivity {
 
                                 updateStudyStatus(word);
 
-//                                logAnswered(word);
+                                logAnswered(word, true);
 
                                 dialog.dismiss();
 
@@ -128,6 +127,7 @@ public class QuizActivity extends AppCompatActivity {
 
                     builder.create().show();
                 } else {
+                    logAnswered(word, false);
                     builder.setTitle("Sorry")
                             .setMessage("Your answer is incorrect, try again")
                             .create()
@@ -235,8 +235,7 @@ public class QuizActivity extends AppCompatActivity {
         try {
             localFile = new File(this.getCacheDir(), "image_" + word + ".jpg");
             if (localFile.exists()) {
-//                Glide.with(this).load(localFile).into(quizImageView);
-                Glide.with(getApplication()).load(localFile).into(quizImageView);
+                Glide.with(this).load(localFile).into(quizImageView);
                 return;
             }
             localFile = File.createTempFile("image_" + word, ".jpg", this.getCacheDir());
@@ -250,8 +249,7 @@ public class QuizActivity extends AppCompatActivity {
                 .getFile(localFile)
                 .addOnSuccessListener(it -> {
                     // Load image using Glide from the local file
-//                    Glide.with(this).load(finalLocalFile).into(quizImageView);
-                    Glide.with(getApplicationContext()).load(finalLocalFile).into(quizImageView);
+                    Glide.with(this).load(finalLocalFile).into(quizImageView);
 
                     // download image
                     // Check if ativity still exists
@@ -362,12 +360,11 @@ public class QuizActivity extends AppCompatActivity {
         return transactionList.get(randomIndex);
     }
 
-//    void logAnswered(String label) {
-//        Bundle bundle = new Bundle();
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, label);
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, label);
-//        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE,"answered correctly");
-//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-//    }
+    void logAnswered(String label, boolean correctAnswer) {
+        Bundle bundle = new Bundle();
+        bundle.putString("question", label);
+        bundle.putBoolean("answer", correctAnswer);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
+    }
 
 }

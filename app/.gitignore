@@ -1,3 +1,4 @@
 /build
 src/main/res/raw/credentials.json
 /release
+/debug/

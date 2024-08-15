@@ -1,8 +1,5 @@
 package com.sproj.arimagerecognizer;
 
-import static com.sproj.arimagerecognizer.LanguageManager.availableLanguages;
-
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,21 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -33,6 +26,7 @@ import java.util.Objects;
 public class UserProfileActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
     private LanguageManager languageManager;
     private static final String TAG = "UserProfileActivity";
 
@@ -42,12 +36,14 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         languageManager = new LanguageManager(getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
 
         TextView usernameTextView = findViewById(R.id.textViewUsername);
         TextView languageTextView = findViewById(R.id.languageTextView);
         Button buttonChangeLanguage = findViewById(R.id.buttonChangeLanguage);
         Button logoutButton = findViewById(R.id.buttonLogout);
+        Button deleteButton = findViewById(R.id.buttonDeleteAccount);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
         String username = sharedPreferences.getString("Username", "N/A");
@@ -77,8 +73,8 @@ public class UserProfileActivity extends AppCompatActivity {
         //logout of the account
         logoutButton.setOnClickListener(listener -> logoutUser());
 
-        // Setup change password button, this should navigate to a different screen where the user can change their password
-
+        //to delete account and their database
+        deleteButton.setOnClickListener(listener -> deleteUserAccount());
     }
 
     void downloadModel(String languageSelected) {
@@ -129,6 +125,13 @@ public class UserProfileActivity extends AppCompatActivity {
         mAuth.signOut();
         startActivity(intent);
         finish();
+    }
+
+    private void deleteUserAccount(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        CollectionReference transactionsRef = db.collection("labels/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() + "/recognisedLabels");
+        CollectionReference collectionRef = db.collection("labels/" + user.getEmail() + "/recognisedLabels");
+
     }
 
 }
