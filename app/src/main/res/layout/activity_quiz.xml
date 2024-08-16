@@ -17,11 +17,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
             android:text="@string/quiz"
+            android:textColor="@color/header_color"
             android:textSize="44sp"
             android:textStyle="bold"
-            android:textColor="@color/header_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

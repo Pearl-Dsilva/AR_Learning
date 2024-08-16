@@ -13,14 +13,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
@@ -34,7 +33,9 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     private LanguageManager languageManager;
+    private TextView languageTextView;
     private static final String TAG = "UserProfileActivity";
+    private final ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,37 +44,23 @@ public class UserProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        languageTextView = findViewById(R.id.languageTextView);
         languageManager = new LanguageManager(getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
 
         TextView usernameTextView = findViewById(R.id.textViewUsername);
-        TextView languageTextView = findViewById(R.id.languageTextView);
         Button buttonChangeLanguage = findViewById(R.id.buttonChangeLanguage);
         Button logoutButton = findViewById(R.id.buttonLogout);
         Button deleteButton = findViewById(R.id.buttonDeleteAccount);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
-        String username = sharedPreferences.getString("Username", "N/A");
-        String language = sharedPreferences.getString("Language", "Language Not Chosen");
-        ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
 
-//        usernameTextView.setText(username);
+        String language = sharedPreferences.getString("Language", availableLanguages.get(languageManager.getLanguage()));
+
         languageTextView.setText(language);
         usernameTextView.setText(Objects.requireNonNull(mAuth.getCurrentUser()).getEmail().trim());
 
-        // If you want to perform actions when a new language is selected:
-        Spinner spinnerLanguage = findViewById(R.id.spinnerLanguage);
-        ArrayAdapter<String> languageAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, availableLanguages);
-        languageAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerLanguage.setAdapter(languageAdaptor);
-        spinnerLanguage.setSelection(languageManager.getLanguage());
-        languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
-
         buttonChangeLanguage.setOnClickListener(view -> {
-            languageManager.languageSelected((int) spinnerLanguage.getSelectedItemId());
-            Log.d(TAG, "onCreate: spinner language selected: " + availableLanguages.get(languageManager.getLanguage()));
-            downloadModel(availableLanguages.get(languageManager.getLanguage()));
-            languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
-
+            selectLanguage();
         });
 
         //logout of the account
@@ -81,6 +68,32 @@ public class UserProfileActivity extends AppCompatActivity {
 
         //to delete account and their database
         deleteButton.setOnClickListener(listener -> deleteUserData());
+    }
+
+    void selectLanguage() {
+        LayoutInflater inflater = LayoutInflater.from(UserProfileActivity.this);
+        View customView = inflater.inflate(R.layout.dialog_custom, null);
+
+        // Access views in the custom layout
+        Spinner languageSpinner = customView.findViewById(R.id.languge_spinner);
+        Button selectLanguageInitial = customView.findViewById(R.id.select_button);
+
+        ArrayAdapter<String> languageAdaptor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, availableLanguages);
+        languageAdaptor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(languageAdaptor);
+        languageSpinner.setSelection(0); // default lang chinese
+
+        AlertDialog initialLanguageSelectionDialog = new MaterialAlertDialogBuilder(UserProfileActivity.this).setIcon(R.mipmap.ic_launcher_foreground).setTitle("Language Selection").setMessage("Select language you wish to learn.").setView(customView).create();
+        initialLanguageSelectionDialog.show();
+        initialLanguageSelectionDialog.setCanceledOnTouchOutside(false);
+
+        selectLanguageInitial.setOnClickListener(view -> {
+            languageManager.languageSelected((int) languageSpinner.getSelectedItemId());
+            initialLanguageSelectionDialog.dismiss();
+            downloadModel(availableLanguages.get(languageManager.getLanguage()));
+            languageTextView.setText(availableLanguages.get(languageManager.getLanguage()));
+        });
+        languageManager.getLanguage();
     }
 
     void downloadModel(String languageSelected) {
@@ -97,8 +110,6 @@ public class UserProfileActivity extends AppCompatActivity {
         downloadingAlert.setCanceledOnTouchOutside(false);
         dismissModel.setEnabled(false);
         downloadingAlert.show();
-//        Log.d(TAG, "downloadModel: " + availableLanguages.get(languageManager.getLanguage()));
-
 
         new ModelDownloader().downloader(this, languageManager.getAvailableLanguage().get(languageSelected),
                 (m) -> {
@@ -119,7 +130,6 @@ public class UserProfileActivity extends AppCompatActivity {
                         downloadModel(languageSelected);
                     });
                     dismissModel.setEnabled(true);
-
                 });
     }
 
@@ -179,6 +189,5 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void deleteUserData() {
         deleteAllDocumentsInCollection("labels/" + Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail() + "/recognisedLabels");
-        
     }
 }

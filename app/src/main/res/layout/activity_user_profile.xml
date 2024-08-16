@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -9,71 +9,75 @@
     tools:context="com.sproj.arimagerecognizer.UserProfileActivity"
     tools:ignore="MissingClass">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/textViewProfileTitle"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Profile" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile"
+        android:textColor="@color/header_color"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!-- Username TextView -->
-
-    <!-- Language TextView -->
     <TextView
         android:id="@+id/textViewUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/username"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/languageTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginTop="67dp"
         android:text="@string/Language"
-        android:textAlignment="center" />
-
-    <!-- Change Password Button -->
-    <Spinner
-        android:id="@+id/spinnerLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/spinner_background" />
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsername" />
 
     <Button
         android:id="@+id/buttonChangeLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:backgroundTint="@color/white"
-        android:text="CHANGE LANGUAGE" />
+        android:layout_margin="10dp"
 
+        android:backgroundTint="@color/white"
+        android:text="CHANGE LANGUAGE"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/languageTextView"
+        tools:layout_editor_absoluteX="10dp" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_margin="10dp"
         android:backgroundTint="@color/white"
-        android:text="@string/logout" />
+        android:text="@string/logout"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/buttonChangeLanguage"
+        tools:layout_editor_absoluteX="25dp" />
 
     <Button
         android:id="@+id/buttonDeleteAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:backgroundTint="@color/white"
-        android:text="Delete Data"
-        android:textColor="@color/teal_700" />
+        android:text="@string/delete_data"
+        android:layout_margin="10dp"
+        android:textColor="@color/teal_700"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogout"
+        tools:layout_editor_absoluteX="16dp" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

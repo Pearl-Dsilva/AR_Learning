@@ -10,16 +10,16 @@
     <!-- Help Page Title -->
     <TextView
         android:id="@+id/textViewHelpTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
-        android:text="Help"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="@string/help"
+        android:textSize="44sp"
         android:textStyle="bold"
+        android:textColor="@color/header_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <!-- Content ScrollView -->
     <ScrollView
