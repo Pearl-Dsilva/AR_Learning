@@ -19,6 +19,11 @@ public class ValidationTest extends TestCase {
                 new TestObject("username@gmail.com", true),
                 new TestObject("user.gmail@.com", false),
                 new TestObject("username123@gmail.com", true),
+                new TestObject("info@university.edu", true),
+                new TestObject("user.name@gmail.com", true),
+                new TestObject("user_name@gmail.com", true),
+                new TestObject("hello@creativeagency.com", true),
+                new TestObject("events@citynews.com", true),
         };
     }
 
@@ -31,7 +36,11 @@ public class ValidationTest extends TestCase {
                 new TestObject("A1b2C3d4$", false),
                 new TestObject("Secure@Pass123", true),
                 new TestObject("P@ss", false),
-
+                new TestObject("abcdef", false),
+                new TestObject("user123", false),
+                new TestObject("L0ngC0mpl3xP@ss", true),
+                new TestObject("2g0!dToB3@Tru3", true),
+                new TestObject("iloveyou", false),
         };
     }
 
@@ -44,6 +53,11 @@ public class ValidationTest extends TestCase {
                 new TestObject("A1b2C3d4$", "A1b2C3d4$", true),
                 new TestObject("Secure#Pass123", "Secure#Pass123", true),
                 new TestObject("P@ss", "ComplexP@ssw0rd12", false),
+                new TestObject("", "abcdef", false),
+                new TestObject("user123", "user123", true),
+                new TestObject("L0ngC0mpl3xP@ss", "ComplexP@ssw0rd12", false),
+                new TestObject("2g0!dToB3@Tru3", "L0ngC0mpl3xP@ss", false),
+                new TestObject("2g0!dToB3@Tru3", "2g0!dToB3@Tru3", true),
         };
     }
 
