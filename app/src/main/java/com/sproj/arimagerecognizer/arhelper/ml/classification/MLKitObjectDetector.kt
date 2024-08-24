@@ -19,6 +19,7 @@ package com.sproj.arimagerecognizer.arhelper.ml.classification
 import android.app.Activity
 import android.graphics.Bitmap
 import android.media.Image
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.ImageUtils
 import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.VertexUtils.rotateCoordinates
@@ -29,17 +30,30 @@ import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
 import kotlinx.coroutines.tasks.asDeferred
 import kotlin.math.max
 import kotlin.math.min
+import java.util.Locale
 
 /**
  * Analyzes an image using ML Kit.
  */
 class MLKitObjectDetector(context: Activity) : ObjectDetector(context) {
+    // TTS Initialization
+    private var textToSpeech: TextToSpeech? = null
+
+    init {
+        // Initialize TTS
+        textToSpeech = TextToSpeech(context) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                textToSpeech?.language = Locale.US // Set the language as needed
+            }
+        }
+    }
+
     // To use a custom model, follow steps on https://developers.google.com/ml-kit/vision/object-detection/custom-models/android.
     val model = LocalModel.Builder().setAssetFilePath("12.tflite").build()
     val builder = CustomObjectDetectorOptions.Builder(model)
 
     // For the ML Kit default model, use the following:
-//  val builder = ObjectDetectorOptions.Builder()
+    // val builder = ObjectDetectorOptions.Builder()
 
     private val options = builder
         .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
@@ -51,7 +65,6 @@ class MLKitObjectDetector(context: Activity) : ObjectDetector(context) {
     object DetectedObjectsRepository {
         val detectedObjects = mutableListOf<DetectedObjectResult>()
     }
-
 
     override suspend fun analyze(
         image: Image,
@@ -71,6 +84,7 @@ class MLKitObjectDetector(context: Activity) : ObjectDetector(context) {
             val bestLabel =
                 obj.labels.maxByOrNull { label -> label.confidence } ?: return@mapNotNull null
             Log.d("Object detection", bestLabel.text)
+            speakDetectedObject(bestLabel.text) // Speak the detected object name
             val coords =
                 obj.boundingBox.exactCenterX().toInt() to obj.boundingBox.exactCenterY().toInt()
             val rotatedCoordinates =
@@ -96,7 +110,19 @@ class MLKitObjectDetector(context: Activity) : ObjectDetector(context) {
         return Pair(detectedObjects, croppedImages)
     }
 
+    // TTS Function to Speak Detected Object Names
+    private fun speakDetectedObject(label: String) {
+        if (textToSpeech?.isSpeaking == true) {
+            textToSpeech?.stop() // Stop any ongoing speech to avoid overlap
+        }
+        textToSpeech?.speak(label, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
 
     @Suppress("USELESS_IS_CHECK")
     fun hasCustomModel() = builder is CustomObjectDetectorOptions.Builder
+
+    fun onDestroy() {
+        textToSpeech?.stop()
+        textToSpeech?.shutdown()
+    }
 }
