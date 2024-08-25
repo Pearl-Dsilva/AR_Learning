@@ -34,7 +34,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -102,6 +104,7 @@ public class QuizActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this)
                         .setTitle("Congratulations")
                         .setMessage("You correctly translated the word")
+                        .setIcon(R.mipmap.ic_launcher_foreground)
                         .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                         .setCancelable(false);
 
@@ -360,11 +363,21 @@ public class QuizActivity extends AppCompatActivity {
         return transactionList.get(randomIndex);
     }
 
-    void logAnswered(String label, boolean correctAnswer) {
-        Bundle bundle = new Bundle();
-        bundle.putString("question", label);
-        bundle.putBoolean("answer", correctAnswer);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
-    }
+void logAnswered(String label, boolean correctAnswer) {
+    Bundle bundle = new Bundle();
+    bundle.putString("question", label);
+    bundle.putBoolean("answer", correctAnswer);
+    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
+
+    // Log the event to Firestore
+    Map<String, Object> logData = new HashMap<>();
+    logData.put("question", label);
+    logData.put("answer", correctAnswer);
+
+    LogEvent logEvent = new LogEvent(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
+    logEvent.logNewEvent(logData, label)
+            .addOnSuccessListener(aVoid -> Log.d(TAG, "Event logged successfully"))
+            .addOnFailureListener(e -> Log.e(TAG, "Failed to log event", e));
+}
 
 }

@@ -1,7 +1,7 @@
 package com.sproj.arimagerecognizer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,13 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
 public class HomeActivity extends AppCompatActivity {
     private final ArrayList<String> availableLanguages = new ArrayList<>(LanguageManager.availableLanguages.keySet());
     private FirebaseAnalytics mFirebaseAnalytics;
-    private SharedPreferences sharedPreferences;
     private static final String TAG = "HomeActivity";
     LanguageManager languageManager;
     private final int TOP_N = 3;
@@ -53,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
         CardView openARCamera = findViewById(R.id.cardViewAR);
         CardView buttonQuiz = findViewById(R.id.cardTest);
         CardView buttonStudy = findViewById(R.id.cardStudy);
+        CardView buttonTop3Users = findViewById(R.id.cardViewTopUsers);
+
         ImageView imageViewSettings = findViewById(R.id.imageViewSettings);
 
         ImageView imageViewHelp = findViewById(R.id.imageViewHelp);
@@ -77,6 +79,8 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        buttonTop3Users.setOnClickListener(view -> showTopUsersDialog());
+
         imageViewSettings.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
             startActivity(intent);
@@ -90,44 +94,62 @@ public class HomeActivity extends AppCompatActivity {
         logAppStarted();
         selectStartingLanguage();
 
-//        Example on how to query Data
-//        new LogEvent(
-//                FirebaseAuth.getInstance()
-//                        .getCurrentUser()
-//                        .getEmail())
-//                .getTodayTop(false)
-//                .addOnFailureListener(failure -> Log.e(TAG, "onFailure: " + failure.getMessage()))
-//                .addOnSuccessListener(success -> {
-//                    Log.d(TAG, "For Top Events: ");
-//                    if (success.isEmpty()) {
-//                        Log.d(TAG, "Empty Result");
-//                        return;
-//                    }
-//                    Map<String, Integer> emailCountMap = new HashMap<>();
-//
-//                    for (DocumentSnapshot documentSnapshot : success.getDocuments()) {
-//                        String email = documentSnapshot.getString("email");
-//                        if (email != null) {
-//                            emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
-//                        }
-//                    }
-//
-//                    List<Map.Entry<String, Integer>> topEmails = emailCountMap.entrySet().stream()
-//                            .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-//                            .limit(TOP_N)
-//                            .collect(Collectors.toList());
-//
-//                    for (Map.Entry<String, Integer> entry : topEmails) {
-//                        Log.d(TAG, "Email: " + entry.getKey() + ", Count: " + entry.getValue());
-//                    }
-//
-//                });
+
     }
 
     void logAppStarted() {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, FirebaseAuth.getInstance().getUid());
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
+    }
+
+    private void showTopUsersDialog() {
+        LogEvent logEvent = new LogEvent(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
+        logEvent.getTodayTop(false).addOnCompleteListener(task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                Map<String, Integer> emailCountMap = new HashMap<>();
+
+                for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+                    String email = documentSnapshot.getString("email");
+                    if (email != null) {
+                        emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
+                    }
+                }
+
+                List<Map.Entry<String, Integer>> topEmails = emailCountMap.entrySet().stream()
+                        .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+                        .limit(TOP_N)
+                        .collect(Collectors.toList());
+
+                StringBuilder topUsersMessage = new StringBuilder("Top Users Today:\n\n");
+                for (Map.Entry<String, Integer> entry : topEmails) {
+                    String username = entry.getKey().split("@")[0];
+                    topUsersMessage.append(username).append(" : ").append(entry.getValue()).append(" points\n");
+//                    topUsersMessage.append(entry.getKey()).append(": ").append(entry.getValue()).append(" events\n");
+                }
+
+                if (topEmails.isEmpty()) {
+                    topUsersMessage.append("No users have logged events today.");
+                }
+
+                // Show dialog
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle("Top Users")
+                        .setIcon(R.mipmap.ic_launcher_foreground)
+                        .setMessage(topUsersMessage.toString())
+                        .setPositiveButton("OK", null)
+                        .show();
+            } else {
+                // Handle the error
+                Log.e(TAG, "Error getting top users: ", task.getException());
+                new AlertDialog.Builder(HomeActivity.this)
+                        .setTitle("Error")
+                        .setIcon(R.mipmap.ic_launcher_foreground)
+                        .setMessage("Failed to retrieve top users. Please try again later.")
+                        .setPositiveButton("OK", null)
+                        .show();
+            }
+        });
     }
 
     void selectStartingLanguage() {
@@ -159,13 +181,10 @@ public class HomeActivity extends AppCompatActivity {
                 downloadModel();
             });
         }
-//        check if user first time, call isSetupCompleted, continue if false
-//        show dialog to select language (first time)
-//        save lang preference, call SetupCompleted
-//        languageManager.modelDownloaded(availableLanguages.get(position));
-//        languageManager.languageSelected(position);
+
     }
 
+    @SuppressLint("SetTextI18n")
     void downloadModel() {
         //start model download
         LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
@@ -175,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
         Button dismissModel = customView.findViewById(R.id.dismiss_button);
         ProgressBar download_progress = customView.findViewById(R.id.download_progress);
 
-        message.setText("Downloading language model.");
+        message.setText("Downloading the language chosen by you.");
         AlertDialog downloadingAlert = new MaterialAlertDialogBuilder(this).setIcon(R.mipmap.ic_launcher_foreground).setView(customView).create();
         downloadingAlert.setCanceledOnTouchOutside(false);
         dismissModel.setEnabled(false);
