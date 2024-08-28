@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StudyActivity extends AppCompatActivity {
+public class StudyActivity extends AppCompatActivity  {
 
     LabelAdapter adapter;
     private static final String TAG = "StudyActivity";

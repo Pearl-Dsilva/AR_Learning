@@ -13,9 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -103,7 +105,52 @@ public class HomeActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
     }
 
+//    private void showTopUsersDialog() {
+//        ConstraintLayout loading = findViewById(R.id.loadingIndicatorHome);
+//        loading.setVisibility(View.VISIBLE);
+//        LogEvent logEvent = new LogEvent(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
+//        logEvent.getTodayTop(false).addOnCompleteListener(task -> {
+//            if (task.isSuccessful() && task.getResult() != null) {
+//                Map<String, Integer> emailCountMap = new HashMap<>();
+//
+//                for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+//                    String email = documentSnapshot.getString("email");
+//                    if (email != null) {
+//                        emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
+//                    }
+//                }
+//
+//                List<Map.Entry<String, Integer>> topEmails = emailCountMap.entrySet().stream()
+//                        .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
+//                        .limit(TOP_N)
+//                        .collect(Collectors.toList());
+//
+//                StringBuilder topUsersMessage = getStringBuilder(topEmails);
+//                loading.setVisibility(View.GONE);
+//
+//                // Show dialog
+//                new AlertDialog.Builder(HomeActivity.this)
+//                        .setTitle("Top Users Today")
+//                        .setIcon(R.mipmap.ic_launcher_foreground)
+//                        .setMessage(topUsersMessage.toString())
+//                        .setPositiveButton("OK", null)
+//                        .show();
+//            } else {
+//                // Handle the error
+//                Log.e(TAG, "Error getting top users: ", task.getException());
+//                new AlertDialog.Builder(HomeActivity.this)
+//                        .setTitle("Error")
+//                        .setIcon(R.mipmap.ic_launcher_foreground)
+//                        .setMessage("Failed to retrieve top users. Please try again later.")
+//                        .setPositiveButton("OK", null)
+//                        .show();
+//            }
+//        });
+//    }
+
     private void showTopUsersDialog() {
+        ConstraintLayout loading = findViewById(R.id.loadingIndicatorHome);
+        loading.setVisibility(View.VISIBLE);
         LogEvent logEvent = new LogEvent(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail());
         logEvent.getTodayTop(false).addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null) {
@@ -121,24 +168,16 @@ public class HomeActivity extends AppCompatActivity {
                         .limit(TOP_N)
                         .collect(Collectors.toList());
 
-                StringBuilder topUsersMessage = new StringBuilder("Top Users Today:\n\n");
-                for (Map.Entry<String, Integer> entry : topEmails) {
-                    String username = entry.getKey().split("@")[0];
-                    topUsersMessage.append(username).append(" : ").append(entry.getValue()).append(" points\n");
-//                    topUsersMessage.append(entry.getKey()).append(": ").append(entry.getValue()).append(" events\n");
-                }
+                // Ensure we have at least 3 top users
+                String firstPlace = topEmails.size() > 0 ? topEmails.get(0).getKey() : "N/A";
+                String secondPlace = topEmails.size() > 1 ? topEmails.get(1).getKey() : "N/A";
+                String thirdPlace = topEmails.size() > 2 ? topEmails.get(2).getKey() : "N/A";
 
-                if (topEmails.isEmpty()) {
-                    topUsersMessage.append("No users have logged events today.");
-                }
+                loading.setVisibility(View.GONE);
 
-                // Show dialog
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setTitle("Top Users")
-                        .setIcon(R.mipmap.ic_launcher_foreground)
-                        .setMessage(topUsersMessage.toString())
-                        .setPositiveButton("OK", null)
-                        .show();
+                // Show the custom dialog
+                showCustomDialog(firstPlace, secondPlace, thirdPlace);
+
             } else {
                 // Handle the error
                 Log.e(TAG, "Error getting top users: ", task.getException());
@@ -150,6 +189,51 @@ public class HomeActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+
+    private void showCustomDialog(String first, String second, String third) {
+        // Inflate the custom layout
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_ranking, null);
+
+        // Build the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Find TextViews and Button in the inflated layout
+        TextView dialogFirst = dialogView.findViewById(R.id.firstPlaceText);
+        TextView dialogSecond = dialogView.findViewById(R.id.secondPlaceText);
+        TextView dialogThird = dialogView.findViewById(R.id.thirdPlaceText);
+        Button buttonOK = dialogView.findViewById(R.id.okButton);
+
+        // Set text for TextViews based on the passed strings
+        dialogFirst.setText(first);
+        dialogSecond.setText(second);
+        dialogThird.setText(third);
+
+        // Create and show the dialog
+        AlertDialog dialog = builder.create();
+
+        // Handle OK button click
+        buttonOK.setOnClickListener(v -> dialog.dismiss());
+
+        // Show the dialog
+        dialog.show();
+    }
+
+
+
+    private static @NonNull StringBuilder getStringBuilder(List<Map.Entry<String, Integer>> topEmails) {
+        StringBuilder topUsersMessage = new StringBuilder();
+        for (Map.Entry<String, Integer> entry : topEmails) {
+            String username = entry.getKey().split("@")[0];
+            topUsersMessage.append(username).append(" : ").append(entry.getValue()).append(" points\n");
+        }
+        if (topEmails.isEmpty()) {
+            topUsersMessage.append("No users have logged events today.");
+        }
+        return topUsersMessage;
     }
 
     void selectStartingLanguage() {

@@ -16,7 +16,6 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -50,6 +49,14 @@
           android:layout_height="wrap_content"
           android:paddingHorizontal="60dp"
           android:text="@string/clear" />
+
+      <androidx.appcompat.widget.AppCompatButton
+          android:id="@+id/infoButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@android:drawable/ic_menu_info_details"
+          android:paddingHorizontal="60dp"
+          android:src="@android:drawable/ic_menu_info_details" />
 
     </LinearLayout>
 

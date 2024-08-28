@@ -21,16 +21,16 @@ import android.graphics.Bitmap
 import android.media.Image
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.ImageUtils
-import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.VertexUtils.rotateCoordinates
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions
+import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.ImageUtils
+import com.sproj.arimagerecognizer.arhelper.ml.classification.utils.VertexUtils.rotateCoordinates
 import kotlinx.coroutines.tasks.asDeferred
+import java.util.Locale
 import kotlin.math.max
 import kotlin.math.min
-import java.util.Locale
 
 /**
  * Analyzes an image using ML Kit.

@@ -16,7 +16,7 @@
         android:visibility="visible">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
@@ -26,7 +26,8 @@
                 android:id="@+id/labeNotVisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#131111"
+                android:layout_margin="5dp"
+                android:background="#7F7F7F"
                 android:text=""
                 android:textColor="#F6F4F4" />
 
@@ -34,7 +35,7 @@
                 android:id="@+id/textViewLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Label"
+                android:text="@string/label"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -43,7 +44,8 @@
                 android:id="@+id/translationNotVisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#131111"
+                android:layout_margin="5dp"
+                android:background="#7F7F7F"
                 android:text=""
                 android:textColor="#E6DCDC" />
 
@@ -51,7 +53,7 @@
                 android:id="@+id/textViewTimestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="timestamp"
+                android:text="@string/timestamp"
                 android:textSize="14sp"
                 android:visibility="gone" />
         </LinearLayout>
@@ -61,6 +63,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/image"
             app:srcCompat="@drawable/item_image_skeleton" />
 
     </LinearLayout>

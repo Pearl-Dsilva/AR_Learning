@@ -18,6 +18,8 @@ package com.sproj.arimagerecognizer.arhelper.ml
 import android.graphics.Bitmap
 import android.opengl.Matrix
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.ar.core.Anchor
@@ -35,6 +37,7 @@ import com.sproj.arimagerecognizer.arhelper.ml.render.LabelRender
 import com.sproj.arimagerecognizer.arhelper.ml.render.PointCloudRender
 import com.google.ar.core.exceptions.CameraNotAvailableException
 import com.google.ar.core.exceptions.NotYetAvailableException
+import com.sproj.arimagerecognizer.WebViewBottomSheetFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -104,6 +107,19 @@ class AppRenderer(val activity: ARActivity) : DefaultLifecycleObserver, SampleRe
             view.resetButton.isEnabled = false
             hideSnackbar()
         }
+
+        view.infoButton.setOnClickListener {
+            val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+//            val firstLabel = arLabeledAnchors[0].label
+//            Log.d(TAG, "bindView: label $firstLabel")
+            val url = "https://www.google.com/search?q=hi"
+            showWebViewBottomSheet(fragmentManager, url)
+        }
+    }
+
+    private fun showWebViewBottomSheet(fragmentManager: FragmentManager, url: String) {
+        val bottomSheetFragment = WebViewBottomSheetFragment.newInstance(url)
+        bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
     }
 
     override fun onSurfaceCreated(render: SampleRender) {

@@ -1,2 +1,2 @@
-rootProject.name = "ARCore MLKit"
+rootProject.name = "FluentAR"
 include ':app'
