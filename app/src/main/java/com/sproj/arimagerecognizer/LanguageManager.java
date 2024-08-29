@@ -5,15 +5,30 @@ import android.content.SharedPreferences;
 import com.google.mlkit.nl.translate.TranslateLanguage;
 
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 public class LanguageManager {
     SharedPreferences sharedPreferences;
 
-    public static final Map<String, String> availableLanguages = Map.of(
-            "CHINESE", TranslateLanguage.CHINESE,
-            "SPANISH", TranslateLanguage.SPANISH,
-            "FRENCH", TranslateLanguage.FRENCH,
-            "KANNADA", TranslateLanguage.KANNADA);
+    public static final Map<String, String> availableLanguages = Map.ofEntries(
+            new SimpleEntry<>("CHINESE", TranslateLanguage.CHINESE),
+            new SimpleEntry<>("SPANISH", TranslateLanguage.SPANISH),
+            new SimpleEntry<>("FRENCH", TranslateLanguage.FRENCH),
+            new SimpleEntry<>("RUSSIAN", TranslateLanguage.RUSSIAN),
+            new SimpleEntry<>("GERMAN", TranslateLanguage.GERMAN),
+            new SimpleEntry<>("KANNADA", TranslateLanguage.KANNADA),
+            new SimpleEntry<>("Gujarati", TranslateLanguage.GUJARATI),
+            new SimpleEntry<>("Bengali", TranslateLanguage.BENGALI),
+            new SimpleEntry<>("Marathi", TranslateLanguage.MARATHI),
+            new SimpleEntry<>("Japanese", TranslateLanguage.JAPANESE),
+            new SimpleEntry<>("ITALIAN", TranslateLanguage.ITALIAN),
+            new SimpleEntry<>("HINDI", TranslateLanguage.HINDI),
+            new SimpleEntry<>("Telugu", TranslateLanguage.TELUGU),
+            new SimpleEntry<>("Urdu", TranslateLanguage.URDU),
+            new SimpleEntry<>("Arabic", TranslateLanguage.ARABIC),
+            new SimpleEntry<>("Korean", TranslateLanguage.KOREAN),
+            new SimpleEntry<>("German", TranslateLanguage.GERMAN)
+    );
 
 
     public LanguageManager(SharedPreferences sharedPreferences) {
