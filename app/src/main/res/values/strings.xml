@@ -87,7 +87,7 @@
     <string name="_2nd_place">2nd place</string>
     <string name="_1st_place">1st place</string>
     <string name="image">image</string>
-    <string name="timestamp">timestamp</string>
+    <string name="translation">translation</string>
     <string name="label">Label</string>
 
 </resources>

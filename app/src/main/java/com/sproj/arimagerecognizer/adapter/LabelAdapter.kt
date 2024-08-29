@@ -49,6 +49,7 @@ class LabelAdapter(
     ) : RecyclerView.Adapter<LabelViewHolder>() {
 
     private var labels: List<Pair<String, Date>>
+    private lateinit var tempLabels: MutableList<Pair<String, Date>>
     private lateinit var translations: MutableList<String>
     private var options: TranslatorOptions
     private var languageTranslator: Translator
@@ -56,7 +57,8 @@ class LabelAdapter(
     private var activeCoroutinesCount = 0
 
     init {
-        labels = ArrayList()
+        this.labels = ArrayList()
+        this.tempLabels = mutableListOf()
         val languageManager = LanguageManager(sharedPreferences)
         val languagesArray = ArrayList(LanguageManager.availableLanguages.keys)
 
@@ -74,10 +76,24 @@ class LabelAdapter(
         loadedModel = AtomicBoolean(false)
     }
 
-    fun updateData(labels: List<Pair<String, Date>>) {
+    fun setData(labels: List<Pair<String, Date>>) {
         this.labels = labels
         this.translations = MutableList(labels.size) { "" }
+        loadData(filter = "")
         notifyDataSetChanged()
+    }
+
+    fun loadData(filter: String){
+        tempLabels.clear()
+        for (pair in labels) {
+            if (filter == ""){
+                tempLabels.add(pair)
+            } else if(pair.first.contains(filter)){
+                tempLabels.add(pair)
+            }
+        }
+        notifyDataSetChanged()
+
     }
 
     private suspend fun downloadModelIfNeeded(conditions: DownloadConditions) {
@@ -121,7 +137,7 @@ class LabelAdapter(
 
     override fun onBindViewHolder(holder: LabelViewHolder, position: Int) {
         // Get label data for the current position
-        val label = labels[position]
+        val label = tempLabels[position]
         // Update label text to sentence case
         val displayLabel = label.first[0].uppercaseChar() + label.first.substring(1)
         holder.textViewLabel.text = displayLabel
@@ -133,10 +149,10 @@ class LabelAdapter(
         CoroutineScope(Dispatchers.IO + SupervisorJob()).launch {
             try {
                 val result = translateText(displayLabel)
-                if (translations[position] == labels[position].first || translations[position] != "") {
+                if (translations[position] == tempLabels[position].first || translations[position] != "") {
                     Log.d(
                         TAG,
-                        "This is already translated: Label" + labels[position].first + ", translation: " + translations[position]
+                        "This is already translated: Label" + tempLabels[position].first + ", translation: " + translations[position]
                     )
                 } else {
                     Log.d(TAG, "Initial Translation: $result")
@@ -152,7 +168,6 @@ class LabelAdapter(
                             holder.labeNotVisible.visibility = View.GONE
                         }
 
-//                        holder.translationNotVisible.text = "Translation: ${translations[position]}"
                     }
                     decrementActiveCoroutinesCount()
                 }
@@ -199,7 +214,7 @@ class LabelAdapter(
     }
 
     override fun getItemCount(): Int {
-        return labels.size
+        return tempLabels.size
     }
 
     class LabelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -212,7 +227,7 @@ class LabelAdapter(
 
         init {
             textViewLabel = itemView.findViewById(R.id.textViewLabel)
-            textViewTimestamp = itemView.findViewById(R.id.textViewTimestamp)
+            textViewTimestamp = itemView.findViewById(R.id.textViewTranslation)
             imageView = itemView.findViewById(R.id.item_img)
             translationNotVisible = itemView.findViewById(R.id.translationNotVisible)
             labeNotVisible = itemView.findViewById(R.id.labeNotVisible)

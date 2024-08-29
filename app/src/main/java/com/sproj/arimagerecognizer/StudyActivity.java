@@ -3,13 +3,13 @@ package com.sproj.arimagerecognizer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sproj.arimagerecognizer.adapter.LabelAdapter;
-import com.sproj.arimagerecognizer.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,10 +30,27 @@ public class StudyActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_study);
 
         RecyclerView lists = findViewById(R.id.recyclerViewVocabularySets);
+        SearchView searchView = findViewById(R.id.searchView);
+
         lists.setLayoutManager(new LinearLayoutManager(this));
         adapter = new LabelAdapter(getApplicationContext(),getApplication().getSharedPreferences(getString(R.string.language_selection), MODE_PRIVATE));
         lists.setAdapter(adapter);
         loadDataFromFirestore();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.loadData(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.loadData(newText);
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -65,7 +82,7 @@ public class StudyActivity extends AppCompatActivity  {
                     // Add the label and timestamp to the list
                     recognisedLabels.add(new Pair<>(label, timestamp));
                 }
-                adapter.updateData(recognisedLabels);
+                adapter.setData(recognisedLabels);
             } catch (Exception e) {
                 // Handle any errors
                 Log.d(TAG, "loadDataFromFirestore: " + e.getMessage());
